@@ -1,0 +1,112 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<table id="table">
+    <thead>
+        <tr>
+            <th class='cell'>Модель</th>
+            <th class='cell'>Открывание</th>
+            <th class='cell-l'>Габариты </th>
+            <th class='cell-r'>полотна</th>
+            <th class='cell-l'>Габариты </th>
+            <th class='cell-r'>проема</th>
+            <th class='cell-l'>Габариты </th>
+            <th class='cell-r'>короба</th>
+            <th class='cell'>Цена</th>
+        </tr>
+        <tr>
+            <th class='cell'>Наименование</th>
+            <th class='cell'>Левое/правое</th>
+            <th class='cell'>Ширина</th>
+            <th class='cell'>Высота</th>
+            <th class='cell'>Ширина</th>
+            <th class='cell'>Высота</th>
+            <th class='cell'>Ширина</th>
+            <th class='cell'>Высота</th>
+            <th class='cell'>€</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+{% if door_block_list %}
+    <table>
+        <thead>
+            <tr>
+                <th class='cell'>Модель</th>
+                <th class='cell'>Открывание</th>
+                <th class='cell-l'>Габариты </th>
+                <th class='cell-r'>полотна</th>
+                <th class='cell-l'>Габариты </th>
+                <th class='cell-r'>проема</th>
+                <th class='cell-l'>Габариты </th>
+                <th class='cell-r'>короба</th>
+                <th class='cell'>Цена</th>
+            </tr>
+            <tr>
+                <th class='cell'>Наименование</th>
+                <th class='cell'>Левое/правое</th>
+                <th class='cell'>Ширина</th>
+                <th class='cell'>Высота</th>
+                <th class='cell'>Ширина</th>
+                <th class='cell'>Высота</th>
+                <th class='cell'>Ширина</th>
+                <th class='cell'>Высота</th>
+                <th class='cell'>€</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <select name="model" id="select-model" class='model cell'>
+                        <option value="" disabled selected>Модель</option>
+                        {% for door in door_block_list %}
+                        {% ifchanged door.model %}
+                        <option value="{{ door.model }}">{{ door.model }}</option>
+                        {% endifchanged %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>
+                    <select name="opening" id="select-opening" class='opening cell'>
+                        <option value="" disabled selected>Открывание</option>
+                        <option value="Левое">Левое</option>
+                        <option value="Правое">Правое</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="width" id="select-width" class='width cell get-price'>
+                        <option value="" disabled selected>Ширина</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="height" id="select-height" class='height cell get-price'>
+                        <option value="" disabled selected>Высота</option>
+                    </select>
+                </td>
+                <td>
+                    <span class="cell">Ширина</span>
+                </td>
+                <td>
+                    <span class="cell">Высота</span>
+                </td>
+                <td>
+                    <span class="cell">Ширина</span>
+                </td>
+                <td>
+                    <span class="cell">Высота</span>
+                </td>
+                <td>
+                    <span class="price" id='price'></span>
+                </td>
+            <tr>
+        </tbody>
+    </table>
+{% endif %}
+{% comment %} <button id="get-price">Расчитать цену</button> {% endcomment %}
+<button type="button" id="add">Добавить дверь</button>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="{% static 'js/index.js' %}"></script>
