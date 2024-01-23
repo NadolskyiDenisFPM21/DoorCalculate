@@ -11,17 +11,19 @@
             <th class='cell-r'>полотна</th>
             <th class='cell-l'>Габариты </th>
             <th class='cell-r'>проема</th>
+            <th class='cell'>Тип короба</th>
             <th class='cell-l'>Габариты </th>
             <th class='cell-r'>короба</th>
             <th class='cell'>Цена</th>
         </tr>
         <tr>
             <th class='cell'>Наименование</th>
-            <th class='cell'>Левое/правое</th>
+            <th class='cell'>Левое\правое</th>
+            <th class='cell'>Ширина лицо\тыл</th>
+            <th class='cell'>Высота </br>лицо\тыл</th>
             <th class='cell'>Ширина</th>
             <th class='cell'>Высота</th>
-            <th class='cell'>Ширина</th>
-            <th class='cell'>Высота</th>
+            <th class='cell'>Наименование</th>
             <th class='cell'>Ширина</th>
             <th class='cell'>Высота</th>
             <th class='cell'>€</th>
@@ -41,17 +43,19 @@
                 <th class='cell-r'>полотна</th>
                 <th class='cell-l'>Габариты </th>
                 <th class='cell-r'>проема</th>
+                <th class='cell'>Тип короба</th>
                 <th class='cell-l'>Габариты </th>
                 <th class='cell-r'>короба</th>
                 <th class='cell'>Цена</th>
             </tr>
             <tr>
                 <th class='cell'>Наименование</th>
-                <th class='cell'>Левое/правое</th>
+                <th class='cell'>Левое\правое</th>
                 <th class='cell'>Ширина</th>
                 <th class='cell'>Высота</th>
                 <th class='cell'>Ширина</th>
                 <th class='cell'>Высота</th>
+                <th class='cell'>Наименование</th>
                 <th class='cell'>Ширина</th>
                 <th class='cell'>Высота</th>
                 <th class='cell'>€</th>
@@ -87,16 +91,21 @@
                     </select>
                 </td>
                 <td>
-                    <span class="cell">Ширина</span>
+                    <span class="cell" id="aperture-width"></span>
                 </td>
                 <td>
-                    <span class="cell">Высота</span>
+                    <span class="cell" id="aperture-height"></span>
                 </td>
                 <td>
-                    <span class="cell">Ширина</span>
+                    <select name="frame" id="select-frame" class='frame cell get-price'>
+                        <option value="" disabled selected>Тип короба</option>
+                    </select>
                 </td>
                 <td>
-                    <span class="cell">Высота</span>
+                    <span class="cell" id="frame-width"></span>
+                </td>
+                <td>
+                    <span class="cell" id="frame-height"></span>
                 </td>
                 <td>
                     <span class="price" id='price'></span>

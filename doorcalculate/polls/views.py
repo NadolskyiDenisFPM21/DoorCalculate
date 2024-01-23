@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.template import loader
-from .models import DoorBlock
+from .models import DoorBlock, Frame
 
 from urllib.parse import quote, unquote
 
@@ -23,9 +23,13 @@ def index(request):
 
 def get_filtered_data(request):
     selected_model = request.GET.get('selected_model')
-    filtered_data = DoorBlock.objects.filter(model=selected_model).values('width', 'height')
+    frame_id_list = [id['frame'] for id in list(DoorBlock.objects.filter(model=selected_model).values('frame'))]
+    frames = [list(Frame.objects.filter(id=id).values('model'))[0]['model'] for id in frame_id_list]
+    filtered_data = list(DoorBlock.objects.filter(model=selected_model).values('width', 'height'))
+    for i in range(len(frames)):
+        filtered_data[i]['frame'] = frames[i]
     
-    return JsonResponse(list(filtered_data), safe=False)
+    return JsonResponse(filtered_data, safe=False)
 
 
 def set_table_cookies(request):
@@ -41,6 +45,54 @@ def get_price(request):
     model_d = request.GET.get('model')
     width_d = request.GET.get('width')
     height_d = request.GET.get('height')
-    data = DoorBlock.objects.filter(model=model_d, width=width_d, height=height_d).values('price')
+    frame_model = request.GET.get('frame')
+    frame_id = Frame.objects.get(model=frame_model)
+    data = DoorBlock.objects.filter(model=model_d, width=width_d, height=height_d, frame=frame_id).values('price')
     
     return JsonResponse(list(data), safe=False)
+
+
+def get_dimensions_aperture(request):
+    frame = Frame.objects.get(model=request.GET.get('frame'))
+    width_door = int(request.GET.get('width_door'))
+    height_door = int(request.GET.get('height_door'))
+    width = 28 + frame.depth*2 + width_door
+    height = 22 + frame.depth + height_door
+    
+    data = {
+        'aperture_width': width,
+        'aperture_height': height    
+    }
+    
+    return JsonResponse(data, safe=False)
+
+def get_dimensions_frame(request):
+    frame = Frame.objects.get(model=request.GET.get('frame'))
+    width_door = int(request.GET.get('width_door'))
+    height_door = int(request.GET.get('height_door'))
+    width = 8 + frame.depth*2 + width_door
+    height = 12 + frame.depth + height_door
+    
+    data = {
+        'frame_width': width,
+        'frame_height': height    
+    }
+    
+    return JsonResponse(data, safe=False)
+
+def get_back_width(request):
+    width = int(request.GET.get('width'))
+    height = int(request.GET.get('height'))
+    frame = Frame.objects.get(model=request.GET.get('frame'))
+    back_width = width - 2*frame.width_back_indent
+    back_height = height - frame.width_back_indent
+    
+    data = {
+        'back_width': back_width,
+        'back_height': back_height,
+    }
+    print(data)
+    
+    return JsonResponse(data=data, safe=False)
+    
+    
