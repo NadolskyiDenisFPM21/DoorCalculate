@@ -1,11 +1,6 @@
-.cell,
-.cell-l,
-.cell-r {
-    width: 100px;
-    height: 25px;
-}
-
 table {
+    width: 100%;
+    table-layout: fixed;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
@@ -13,6 +8,16 @@ table {
 table thead tr th {
     border: 2px solid #121212;
 }
+
+.cell,
+.cell-l,
+.cell-r {
+    height: 25px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: clip;
+}
+
 
 .cell-l {
     border-right: none;
@@ -24,4 +29,38 @@ table thead tr th {
 
 table tbody tr td {
     border: 1px solid #121212;
+}
+
+select,
+input {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+
+
+select:active,
+select:focus,
+input:active {
+    border: none;
+    outline: none;
+}
+
+select:hover,
+input:hover {
+    cursor: pointer;
+    color: #636363;
+}
+
+td.td-opening {
+    display: inline-flex;
+}
+
+.td-opening {
+    width: 200px;
+}
+
+.opening {
+    width: 50%;
 }

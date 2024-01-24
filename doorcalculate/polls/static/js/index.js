@@ -10,6 +10,20 @@ $(document).ready(function () {
     }
 
 
+    function isStringInOptions(selectId, searchString) {
+        var selectElement = $(selectId);
+        var options = selectElement.children();
+
+        for (var i = 0; i < options.length; i++) {
+            if (options[i].text.includes(searchString)) {
+                return true; // Найдено совпадение
+            }
+        }
+
+        return false; // Совпадение не найдено
+    }
+
+
     function create_table() {
         var table = $('#table tbody');
         table.empty();
@@ -18,6 +32,7 @@ $(document).ready(function () {
             for (let j = 0; j < door_list[i].length; j++) {
                 var td = document.createElement('td');
                 td.innerHTML = door_list[i][j];
+                $(td).addClass('cell');
                 tr.appendChild(td);
             }
             table.append(tr);
@@ -55,25 +70,19 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 $('#select-width').empty();
-                $('#select-width').append($('<option value="" disabled selected>Ширина</option>'));
+                $('#select-width').append($('<option value="" disabled selected>Ширина мм</option>'));
                 $('#select-height').empty();
-                $('#select-height').append($('<option value="" disabled selected>Высота</option>'));
+                $('#select-height').append($('<option value="" disabled selected>Высота мм</option>'));
                 $('#select-frame').empty();
                 $('#select-frame').append($('<option value="" disabled selected>Тип короба</option>'));
-                var width = 0;
-                var height = 0;
-                var frame = "";
                 $.each(data, function (index, item) {
-                    if (width != item.width) {
-                        width = item.width;
+                    if (!isStringInOptions('#select-width', item.width)) {
                         $('#select-width').append('<option value="' + item.width + '">' + item.width + '</option>');
                     }
-                    if (height != item.height) {
-                        height = item.height;
+                    if (!isStringInOptions('#select-height', item.height)) {
                         $('#select-height').append('<option value="' + item.height + '">' + item.height + '</option>');
                     }
-                    if (frame != item.frame) {
-                        frame = item.frame;
+                    if (!isStringInOptions('#select-frame', item.frame)) {
                         $('#select-frame').append('<option value="' + item.frame + '">' + item.frame + '</option>');
                     }
                 });
@@ -81,10 +90,10 @@ $(document).ready(function () {
         });
     });
     $('#add').click(function () {
-        if ($('#select-model').val() && $('#select-opening').val() && $('#select-width').val() && $('#select-height').val() && $('#select-frame').val()) {
+        if ($('#select-model').val() && $('#select-opening').val() && $('#select-opening-2').val() && $('#select-width').val() && $('#select-height').val() && $('#select-frame').val() && $('#count').val()) {
             var data = [];
             data.push($('#select-model').val());
-            data.push($('#select-opening').val());
+            data.push($('#select-opening').val() + '\|' + $('#select-opening-2').val());
             data.push('');
             data.push('');
 
@@ -98,7 +107,6 @@ $(document).ready(function () {
                 data: ajax_data,
                 dataType: "json",
                 success: function (dimensions) {
-                    console.log(data);
                     door_list[door_list.length - 1][2] = $('#select-width').val() + '\\' + dimensions.back_width;
                     door_list[door_list.length - 1][3] = $('#select-height').val() + '\\' + dimensions.back_height;
                     create_table();
@@ -116,9 +124,14 @@ $(document).ready(function () {
             data.push($('#aperture-width').text());
             data.push($('#aperture-height').text());
             data.push($('#select-frame').val());
+            data.push($('#al-band-canvas').text());
+            data.push($('#profile-frame-color').text());
+            data.push($('#seal-color').text());
             data.push($('#frame-width').text());
             data.push($('#frame-height').text());
+            data.push($('#count').val());
             data.push($('#price').text());
+            data.push($('#total-price').text());
 
             door_list.push(data);
             create_table();
@@ -133,6 +146,9 @@ $(document).ready(function () {
         }
     });
 
+
+
+
     $('.get-price').change(function () {
         if ($('#select-width').val() && $('#select-height').val() && $('#select-frame').val()) {
             var json_req = {
@@ -142,13 +158,23 @@ $(document).ready(function () {
                 'frame': $('#select-frame').val(),
             };
             $.ajax({
-                url: "/get_price/",
+                url: "/get_door_info/",
                 data: json_req,
                 dataType: "json",
                 success: function (data) {
                     var price = $('#price');
                     price.empty();
                     price.append(data[0].price);
+
+                    var al_band_canv = $('#al-band-canvas');
+                    al_band_canv.empty();
+                    al_band_canv.append(data[0].al_banding_canvas ? '+' : '-');
+                    var profile_frame_color = $('#profile-frame-color');
+                    profile_frame_color.empty();
+                    profile_frame_color.append(data[0].profile_frame_color);
+                    var seal_color = $('#seal-color');
+                    seal_color.empty();
+                    seal_color.append(data[0].seal_color)
                 }
             });
 
@@ -181,6 +207,10 @@ $(document).ready(function () {
             });
         }
 
+        if ($('#count').val() && $('#price').text()) {
+            var total_price = $('#count').val() * $('#price').text()
+            $('#total-price').text(total_price);
+        }
     });
 
 

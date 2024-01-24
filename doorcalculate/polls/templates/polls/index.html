@@ -6,26 +6,36 @@
     <thead>
         <tr>
             <th class='cell'>Модель</th>
-            <th class='cell'>Открывание</th>
+            <th class='cell td-opening'>Открывание</th>
             <th class='cell-l'>Габариты </th>
             <th class='cell-r'>полотна</th>
             <th class='cell-l'>Габариты </th>
             <th class='cell-r'>проема</th>
             <th class='cell'>Тип короба</th>
+            <th class='cell'>Алюминиевый обвяз полотна</th>
+            <th class='cell'>Цвет покраски профиля и короба</th>
+            <th class='cell'>Цвет уплотнителя</th>
             <th class='cell-l'>Габариты </th>
             <th class='cell-r'>короба</th>
+            <th class='cell'>Количество</th>
             <th class='cell'>Цена</th>
+            <th class='cell'>Всего</th>
         </tr>
         <tr>
             <th class='cell'>Наименование</th>
-            <th class='cell'>Левое\правое</th>
-            <th class='cell'>Ширина лицо\тыл</th>
-            <th class='cell'>Высота </br>лицо\тыл</th>
-            <th class='cell'>Ширина</th>
-            <th class='cell'>Высота</th>
+            <th class='cell td-opening'>Левое\правое</th>
+            <th class='cell'>Ширина мм лицо\тыл</th>
+            <th class='cell'>Высота мм </br>лицо\тыл</th>
+            <th class='cell'>Ширина мм</th>
+            <th class='cell'>Высота мм</th>
             <th class='cell'>Наименование</th>
-            <th class='cell'>Ширина</th>
-            <th class='cell'>Высота</th>
+            <th class='cell'>+\-</th>
+            <th class='cell'>Цвет</th>
+            <th class='cell'>Цвет</th>
+            <th class='cell'>Ширина мм</th>
+            <th class='cell'>Высота мм</th>
+            <th class='cell'>шт</th>
+            <th class='cell'>€</th>
             <th class='cell'>€</th>
         </tr>
     </thead>
@@ -38,33 +48,43 @@
         <thead>
             <tr>
                 <th class='cell'>Модель</th>
-                <th class='cell'>Открывание</th>
+                <th class='cell td-opening'>Открывание</th>
                 <th class='cell-l'>Габариты </th>
                 <th class='cell-r'>полотна</th>
                 <th class='cell-l'>Габариты </th>
                 <th class='cell-r'>проема</th>
                 <th class='cell'>Тип короба</th>
+                <th class='cell'>Алюминиевый обвяз полотна</th>
+                <th class='cell'>Цвет покраски профиля и короба</th>
+                <th class='cell'>Цвет уплотнителя</th>
                 <th class='cell-l'>Габариты </th>
                 <th class='cell-r'>короба</th>
+                <th class='cell'>Количество</th>
                 <th class='cell'>Цена</th>
+                <th class='cell'>Всего</th>
             </tr>
             <tr>
                 <th class='cell'>Наименование</th>
-                <th class='cell'>Левое\правое</th>
-                <th class='cell'>Ширина</th>
-                <th class='cell'>Высота</th>
-                <th class='cell'>Ширина</th>
-                <th class='cell'>Высота</th>
+                <th class='cell td-opening'>Левое\правое</th>
+                <th class='cell'>Ширина мм</th>
+                <th class='cell'>Высота мм</th>
+                <th class='cell'>Ширина мм</th>
+                <th class='cell'>Высота мм</th>
                 <th class='cell'>Наименование</th>
-                <th class='cell'>Ширина</th>
-                <th class='cell'>Высота</th>
+                <th class='cell'>+\-</th>
+                <th class='cell'>Цвет</th>
+                <th class='cell'>Цвет</th>
+                <th class='cell'>Ширина мм</th>
+                <th class='cell'>Высота мм</th>
+                <th class='cell'>шт</th>
+                <th class='cell'>€</th>
                 <th class='cell'>€</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>
-                    <select name="model" id="select-model" class='model cell'>
+                <td class='cell'>
+                    <select name="model" id="select-model" class='model'>
                         <option value="" disabled selected>Модель</option>
                         {% for door in door_block_list %}
                         {% ifchanged door.model %}
@@ -73,48 +93,67 @@
                         {% endfor %}
                     </select>
                 </td>
-                <td>
-                    <select name="opening" id="select-opening" class='opening cell'>
+                <td class='cell td-opening'>
+                    <select name="opening" id="select-opening" class='opening'>
                         <option value="" disabled selected>Открывание</option>
                         <option value="Левое">Левое</option>
                         <option value="Правое">Правое</option>
                     </select>
-                </td>
-                <td>
-                    <select name="width" id="select-width" class='width cell get-price'>
-                        <option value="" disabled selected>Ширина</option>
+                    <select name="opening-2" id="select-opening-2" class='opening'>
+                        <option value="" disabled selected>Открывание</option>
+                        <option value="Наружное">Наружное</option>
+                        <option value="Внутреннее">Внутреннее</option>
                     </select>
                 </td>
-                <td>
-                    <select name="height" id="select-height" class='height cell get-price'>
-                        <option value="" disabled selected>Высота</option>
+                <td class='cell'>
+                    <select name="width" id="select-width" class='width get-price'>
+                        <option value="" disabled selected>Ширина мм</option>
                     </select>
                 </td>
-                <td>
-                    <span class="cell" id="aperture-width"></span>
+                <td class='cell'>
+                    <select name="height" id="select-height" class='height get-price'>
+                        <option value="" disabled selected>Высота мм</option>
+                    </select>
                 </td>
-                <td>
-                    <span class="cell" id="aperture-height"></span>
+                <td class='cell'>
+                    <span id="aperture-width"></span>
                 </td>
-                <td>
-                    <select name="frame" id="select-frame" class='frame cell get-price'>
+                <td class='cell'>
+                    <span id="aperture-height"></span>
+                </td>
+                <td class='cell'>
+                    <select name="frame" id="select-frame" class='frame get-price'>
                         <option value="" disabled selected>Тип короба</option>
                     </select>
                 </td>
-                <td>
-                    <span class="cell" id="frame-width"></span>
+                <td class='cell'>
+                    <span id="al-band-canvas"></span>
                 </td>
-                <td>
-                    <span class="cell" id="frame-height"></span>
+                <td class='cell'>
+                    <span id="profile-frame-color"></span>
                 </td>
-                <td>
+                <td class='cell'>
+                    <span id="seal-color"></span>
+                </td>
+                <td class='cell'>
+                    <span id="frame-width"></span>
+                </td>
+                <td class='cell'>
+                    <span id="frame-height"></span>
+                </td>
+                <td class='cell count'>
+                    <input placeholder="Введите кол-во" type="number" name="" id="count" min="1" class="get-price">
+                </td>
+                <td class='cell'>
                     <span class="price" id='price'></span>
+                </td>
+                <td class='cell'>
+                    <span class="total-price" id='total-price'></span>
                 </td>
             <tr>
         </tbody>
     </table>
 {% endif %}
-{% comment %} <button id="get-price">Расчитать цену</button> {% endcomment %}
 <button type="button" id="add">Добавить дверь</button>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

@@ -5,6 +5,7 @@ from django.template import loader
 from .models import DoorBlock, Frame
 
 from urllib.parse import quote, unquote
+from ..document_gen import excel
 
 
 def index(request):
@@ -41,13 +42,13 @@ def set_table_cookies(request):
     return response
 
 
-def get_price(request):
+def get_door_info(request):
     model_d = request.GET.get('model')
     width_d = request.GET.get('width')
     height_d = request.GET.get('height')
     frame_model = request.GET.get('frame')
     frame_id = Frame.objects.get(model=frame_model)
-    data = DoorBlock.objects.filter(model=model_d, width=width_d, height=height_d, frame=frame_id).values('price')
+    data = DoorBlock.objects.filter(model=model_d, width=width_d, height=height_d, frame=frame_id).values('price', 'al_banding_canvas', 'profile_frame_color', 'seal_color')
     
     return JsonResponse(list(data), safe=False)
 
@@ -94,5 +95,17 @@ def get_back_width(request):
     print(data)
     
     return JsonResponse(data=data, safe=False)
+
+
+def create_excel_specification(request):
+    if 'door_table' in request.COOKIES.keys():
+            data = unquote(request.COOKIES['door_table'])
+    else:
+        return JsonResponse(data=f"Таблица пустая!", status=500)
+    
+    
+    
+    excel.create(data)
+    
     
     
