@@ -156,5 +156,10 @@
 {% endif %}
 <button type="button" id="add">Добавить дверь</button>
 
+<form method="post" action="{% url 'create_excel_specification' %}">
+    {% csrf_token %}
+    <button type="submit">Download Excel</button>
+</form>
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="{% static 'js/index.js' %}"></script>
