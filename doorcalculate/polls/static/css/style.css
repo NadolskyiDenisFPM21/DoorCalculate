@@ -64,3 +64,24 @@ td.td-opening {
 .opening {
     width: 50%;
 }
+
+
+.opening-img {
+    width: 350px;
+    height: auto;
+}
+
+.price {
+    transform: translateY(-250%);
+    font-weight: bold;
+    text-align: right;
+}
+
+.info-value {
+    text-decoration: underline;
+}
+
+.info-price {
+    width: 100%;
+    height: 100%;
+}

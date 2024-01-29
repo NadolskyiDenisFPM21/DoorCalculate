@@ -24,6 +24,17 @@ $(document).ready(function () {
     }
 
 
+    function full_price() {
+        var fullPrice = 0;
+        $("#table tbody tr").each(function (index, element) {
+            var price = $(element).find("td:last-child");
+            fullPrice += parseInt(price.text());
+        });
+        $('#full-price-value').text(fullPrice.toFixed(2));
+        $('#full-price-discount-value').text((fullPrice * 0.7).toFixed(2));
+    }
+
+
     function create_table() {
         var table = $('#table tbody');
         table.empty();
@@ -37,6 +48,7 @@ $(document).ready(function () {
             }
             table.append(tr);
         }
+        full_price();
     }
 
     function getCookie(cookieName) {
@@ -129,12 +141,14 @@ $(document).ready(function () {
             data.push($('#seal-color').text());
             data.push($('#frame-width').text());
             data.push($('#frame-height').text());
+            data.push('+\\+');
+            data.push('2');
             data.push($('#count').val());
             data.push($('#price').text());
             data.push($('#total-price').text());
 
             door_list.push(data);
-            create_table();
+            //create_table();
             var js_table = JSON.stringify(door_list);
             $.ajax({
                 url: "/set_table_cookies/",

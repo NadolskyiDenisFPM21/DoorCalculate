@@ -1,6 +1,5 @@
-from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
 from django.template import loader
 from .models import DoorBlock, Frame
 
@@ -24,7 +23,6 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
-
 def get_filtered_data(request):
     selected_model = request.GET.get('selected_model')
     frame_id_list = [id['frame'] for id in list(DoorBlock.objects.filter(model=selected_model).values('frame'))]
@@ -35,16 +33,6 @@ def get_filtered_data(request):
     
     return JsonResponse(filtered_data, safe=False)
 
-
-def set_table_cookies(request):
-    door_table = request.GET.get('door_table')
-
-    response = HttpResponse()
-    door_table = quote(door_table)
-    response.set_cookie('door_table', door_table)
-    return response
-
-
 def get_door_info(request):
     model_d = request.GET.get('model')
     width_d = request.GET.get('width')
@@ -54,7 +42,6 @@ def get_door_info(request):
     data = DoorBlock.objects.filter(model=model_d, width=width_d, height=height_d, frame=frame_id).values('price', 'al_banding_canvas', 'profile_frame_color', 'seal_color')
     
     return JsonResponse(list(data), safe=False)
-
 
 def get_dimensions_aperture(request):
     frame = Frame.objects.get(model=request.GET.get('frame'))
@@ -99,7 +86,6 @@ def get_back_width(request):
     
     return JsonResponse(data=data, safe=False)
 
-
 def create_excel_specification(request):
     if 'door_table' in request.COOKIES.keys():
             data = literal_eval(unquote(request.COOKIES['door_table']))
@@ -136,4 +122,13 @@ def create_excel_specification(request):
     return response
     
     
+@csrf_exempt
+def set_table_cookies(request):
+    door_table = request.GET.get('door_table')
+
+    response = HttpResponse()
+    door_table = quote(door_table)
+    response.set_cookie('door_table', door_table)
+    return response
+
     

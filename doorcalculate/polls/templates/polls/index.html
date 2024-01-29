@@ -1,5 +1,11 @@
 {% load static %}
 
+<head>
+    <title>Secret Specification</title>
+</head>
+
+<link rel="shortcut icon" type="image/ico" href="{% static 'media/secret.ico' %}" >
+
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 <table id="table">
@@ -17,6 +23,8 @@
             <th class='cell'>Цвет уплотнителя</th>
             <th class='cell-l'>Габариты </th>
             <th class='cell-r'>короба</th>
+            <th class='cell'>Отверствия ручка</th>
+            <th class='cell'>Петли</th>
             <th class='cell'>Количество</th>
             <th class='cell'>Цена</th>
             <th class='cell'>Всего</th>
@@ -29,19 +37,46 @@
             <th class='cell'>Ширина мм</th>
             <th class='cell'>Высота мм</th>
             <th class='cell'>Наименование</th>
-            <th class='cell'>+\-</th>
+            <th class='cell'>Наличие</th>
             <th class='cell'>Цвет</th>
             <th class='cell'>Цвет</th>
             <th class='cell'>Ширина мм</th>
             <th class='cell'>Высота мм</th>
+            <th class='cell'>лицо\тыл</th>
             <th class='cell'>шт</th>
-            <th class='cell'>€</th>
-            <th class='cell'>€</th>
+            <th class='cell'>шт</th>
+            <th class='cell'>грн</th>
+            <th class='cell'>грн</th>
         </tr>
     </thead>
     <tbody>
     </tbody>
 </table>
+
+
+
+<div class="info">
+    <div class="opening-photo">
+        <img src="{% static "media/Internal opening.png" %}" class="opening-img">
+        <img src="{% static "media/External opening.png" %}" class="opening-img">
+    </div>
+    <div class="price">
+        <div class="info_price">
+            <span>Всего за дверные блоки: </span>
+            <span id="full-price-value" class="info-value"></span>
+            <span>грн</span>
+        </div>
+        <div class="info_price">
+            <span>Скидка: </span>
+            <span id="discount-value" class="info-value">30%</span>
+        </div>   
+        <div class="info_price">
+            <span>Всего, с учётом скидки: </span>
+            <span id="full-price-discount-value" class="info-value"></span>
+            <span>грн</span>
+        </div>
+    </div>
+</div>
 
 {% if door_block_list %}
     <table>
@@ -59,6 +94,8 @@
                 <th class='cell'>Цвет уплотнителя</th>
                 <th class='cell-l'>Габариты </th>
                 <th class='cell-r'>короба</th>
+                <th class='cell'>Отверствия ручка</th>
+                <th class='cell'>Петли</th>
                 <th class='cell'>Количество</th>
                 <th class='cell'>Цена</th>
                 <th class='cell'>Всего</th>
@@ -71,11 +108,13 @@
                 <th class='cell'>Ширина мм</th>
                 <th class='cell'>Высота мм</th>
                 <th class='cell'>Наименование</th>
-                <th class='cell'>+\-</th>
+                <th class='cell'>Наличие</th>
                 <th class='cell'>Цвет</th>
                 <th class='cell'>Цвет</th>
                 <th class='cell'>Ширина мм</th>
                 <th class='cell'>Высота мм</th>
+                <th class='cell'>лицо\тыл</th>
+                <th class='cell'>шт</th>
                 <th class='cell'>шт</th>
                 <th class='cell'>€</th>
                 <th class='cell'>€</th>
@@ -141,6 +180,12 @@
                 <td class='cell'>
                     <span id="frame-height"></span>
                 </td>
+                <td class='cell'>
+                    <span id="hole-pen">+\+</span>
+                </td>
+                <td class='cell'>
+                    <span id="loop">2</span>
+                </td>
                 <td class='cell count'>
                     <input placeholder="Введите кол-во" type="number" name="" id="count" min="1" class="get-price">
                 </td>
@@ -154,8 +199,11 @@
         </tbody>
     </table>
 {% endif %}
-<button type="button" id="add">Добавить дверь</button>
 
+<form>
+{% csrf_token %}
+    <button type="button" id="add">Добавить дверь</button>
+</form>
 <form method="post" action="{% url 'create_excel_specification' %}">
     {% csrf_token %}
     <button type="submit">Download Excel</button>
