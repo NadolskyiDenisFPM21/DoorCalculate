@@ -1,3 +1,7 @@
+* {
+    font-size: 10px;
+}
+
 table {
     width: 100%;
     table-layout: fixed;
@@ -9,22 +13,11 @@ table thead tr th {
     border: 2px solid #121212;
 }
 
-.cell,
-.cell-l,
-.cell-r {
+.cell {
     height: 25px;
     text-align: center;
     overflow: hidden;
     text-overflow: clip;
-}
-
-
-.cell-l {
-    border-right: none;
-}
-
-.cell-r {
-    border-left: none;
 }
 
 table tbody tr td {
@@ -52,19 +45,6 @@ input:hover {
     cursor: pointer;
     color: #636363;
 }
-
-td.td-opening {
-    display: inline-flex;
-}
-
-.td-opening {
-    width: 200px;
-}
-
-.opening {
-    width: 50%;
-}
-
 
 .opening-img {
     width: 350px;

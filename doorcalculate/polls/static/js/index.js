@@ -105,7 +105,8 @@ $(document).ready(function () {
         if ($('#select-model').val() && $('#select-opening').val() && $('#select-opening-2').val() && $('#select-width').val() && $('#select-height').val() && $('#select-frame').val() && $('#count').val()) {
             var data = [];
             data.push($('#select-model').val());
-            data.push($('#select-opening').val() + '\|' + $('#select-opening-2').val());
+            data.push($('#select-opening').val());
+            data.push($('#select-opening-2').val());
             data.push('');
             data.push('');
 
@@ -119,8 +120,8 @@ $(document).ready(function () {
                 data: ajax_data,
                 dataType: "json",
                 success: function (dimensions) {
-                    door_list[door_list.length - 1][2] = $('#select-width').val() + '\\' + dimensions.back_width;
-                    door_list[door_list.length - 1][3] = $('#select-height').val() + '\\' + dimensions.back_height;
+                    door_list[door_list.length - 1][3] = $('#select-width').val() + '\\' + dimensions.back_width;
+                    door_list[door_list.length - 1][4] = $('#select-height').val() + '\\' + dimensions.back_height;
                     create_table();
                     var js_table = JSON.stringify(door_list);
                     $.ajax({

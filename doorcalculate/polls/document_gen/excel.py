@@ -1,4 +1,3 @@
-from datetime import datetime
 import openpyxl
 from openpyxl.worksheet.table import Table, TableStyleInfo
 import io
@@ -11,6 +10,7 @@ def create(data):
     # Записываем заголовки
     headers = list(data.keys())
     for col_num, header in enumerate(headers, 1):
+        sheet.column_dimensions[sheet.cell(row=1, column=col_num).column_letter].width = len(header) + 5
         sheet.cell(row=1, column=col_num, value=header)
 
     # Записываем данные

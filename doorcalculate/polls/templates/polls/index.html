@@ -12,17 +12,14 @@
     <thead>
         <tr>
             <th class='cell'>Модель</th>
-            <th class='cell td-opening'>Открывание</th>
-            <th class='cell-l'>Габариты </th>
-            <th class='cell-r'>полотна</th>
-            <th class='cell-l'>Габариты </th>
-            <th class='cell-r'>проема</th>
+            <th class='cell td-opening' colspan="2">Открывание</th>
+            <th class='cell' colspan="2">Габариты полотна</th>
+            <th class='cell' colspan="2">Габариты проема</th>
             <th class='cell'>Тип короба</th>
             <th class='cell'>Алюминиевый обвяз полотна</th>
             <th class='cell'>Цвет покраски профиля и короба</th>
             <th class='cell'>Цвет уплотнителя</th>
-            <th class='cell-l'>Габариты </th>
-            <th class='cell-r'>короба</th>
+            <th class='cell' colspan="2">Габариты короба</th>
             <th class='cell'>Отверствия ручка</th>
             <th class='cell'>Петли</th>
             <th class='cell'>Количество</th>
@@ -32,6 +29,7 @@
         <tr>
             <th class='cell'>Наименование</th>
             <th class='cell td-opening'>Левое\правое</th>
+            <th class='cell td-opening'>Наружное\внутреннее</th>
             <th class='cell'>Ширина мм лицо\тыл</th>
             <th class='cell'>Высота мм </br>лицо\тыл</th>
             <th class='cell'>Ширина мм</th>
@@ -83,17 +81,14 @@
         <thead>
             <tr>
                 <th class='cell'>Модель</th>
-                <th class='cell td-opening'>Открывание</th>
-                <th class='cell-l'>Габариты </th>
-                <th class='cell-r'>полотна</th>
-                <th class='cell-l'>Габариты </th>
-                <th class='cell-r'>проема</th>
+                <th class='cell' colspan="2">Открывание</th>
+                <th class='cell' colspan="2">Габариты полотна</th>
+                <th class='cell' colspan="2">Габариты проема</th>
                 <th class='cell'>Тип короба</th>
                 <th class='cell'>Алюминиевый обвяз полотна</th>
                 <th class='cell'>Цвет покраски профиля и короба</th>
                 <th class='cell'>Цвет уплотнителя</th>
-                <th class='cell-l'>Габариты </th>
-                <th class='cell-r'>короба</th>
+                <th class='cell' colspan="2">Габариты короба</th>
                 <th class='cell'>Отверствия ручка</th>
                 <th class='cell'>Петли</th>
                 <th class='cell'>Количество</th>
@@ -102,7 +97,8 @@
             </tr>
             <tr>
                 <th class='cell'>Наименование</th>
-                <th class='cell td-opening'>Левое\правое</th>
+                <th class='cell'>Левое\правое</th>
+                <th class='cell'>Наружное\внутреннее</th>
                 <th class='cell'>Ширина мм</th>
                 <th class='cell'>Высота мм</th>
                 <th class='cell'>Ширина мм</th>
@@ -138,6 +134,8 @@
                         <option value="Левое">Левое</option>
                         <option value="Правое">Правое</option>
                     </select>
+                </td>
+                <td>
                     <select name="opening-2" id="select-opening-2" class='opening'>
                         <option value="" disabled selected>Открывание</option>
                         <option value="Наружное">Наружное</option>
@@ -207,6 +205,11 @@
 <form method="post" action="{% url 'create_excel_specification' %}">
     {% csrf_token %}
     <button type="submit">Download Excel</button>
+</form>
+
+<form method="post" action="{% url 'create_pdf_specification' %}">
+    {% csrf_token %}
+    <button type="submit">Download PDF</button>
 </form>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

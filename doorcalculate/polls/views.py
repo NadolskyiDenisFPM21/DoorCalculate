@@ -1,10 +1,9 @@
-from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from .models import DoorBlock, Frame
 
 from urllib.parse import quote, unquote
-from .document_gen import excel
+from .document_gen import excel, pdf
 from ast import literal_eval
 
 from datetime import datetime
@@ -105,6 +104,8 @@ def create_excel_specification(request):
         'Цвет уплотнителя':[],
         'Ширина короба мм':[],
         'Высота короба мм':[],
+        'Отверствия ручка':[],
+        'Петли':[],
         'Количество':[],
         'Цена':[],
         'Всего':[],
@@ -120,9 +121,46 @@ def create_excel_specification(request):
     response.write(file)
     
     return response
+
+def create_pdf_specification(request):
+    if 'door_table' in request.COOKIES.keys():
+            data = literal_eval(unquote(request.COOKIES['door_table']))
+    else:
+        return JsonResponse(data=f"Таблица пустая!", status=500, safe=False)
+    
+    data_dict = {
+        'Модель': [],
+        'Открывание':[],
+        'Ширина полотна мм': [],
+        'Высота полотна мм': [],
+        'Мин ширина проема мм':[],
+        'Мин высота проема мм':[],
+        'Тип короба':[],
+        'Обвяз полотна':[],
+        'Цвет профиля и короба':[],
+        'Цвет уплотнителя':[],
+        'Ширина короба мм':[],
+        'Высота короба мм':[],
+        'Отверствия ручка':[],
+        'Петли':[],
+        'Кол-во':[],
+        'Цена':[],
+        'Всего':[],
+    }
+    for row in data:
+        for i, key in enumerate(data_dict.keys()):
+            data_dict[key].append(row[i])
     
     
-@csrf_exempt
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename=specification-{datetime.now().strftime("%y-%m-%d %H-%M-%S")}.pdf'
+
+    file = pdf.create(data_dict)
+    response.write(file)
+    
+    return response
+    
+    
 def set_table_cookies(request):
     door_table = request.GET.get('door_table')
 
