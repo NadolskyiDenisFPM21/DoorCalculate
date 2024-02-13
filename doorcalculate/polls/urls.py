@@ -3,8 +3,10 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('new_order/', views.new_order, name ='new_order'),
+    # path('orders/', views.order_list, name='orders'),
     path('get_filtered_data/', views.get_filtered_data, name='get_filtered_data'),
-    path('set_table_cookies/', views.set_table_cookies, name='set_table_cookies'),
+    path('set_table/', views.set_table, name='set_table'),
     path('get_door_info/', views.get_door_info, name='get_door_info'),
     path('get_dimensions_aperture/', views.get_dimensions_aperture, name='get_dimensions_aperture'),
     path('get_dimensions_frame/', views.get_dimensions_frame, name='get_dimensions_frame'),

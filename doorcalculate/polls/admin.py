@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import DoorBlock, Frame
+from .models import DoorBlock, Frame, Table
 
 @admin.register(DoorBlock)
 class DoorBlockAdmin(admin.ModelAdmin):
@@ -10,3 +10,8 @@ class DoorBlockAdmin(admin.ModelAdmin):
 class FrameAdmin(admin.ModelAdmin):
     list_display = ('id', 'model', 'depth', 'width_back_indent')
     
+
+
+@admin.register(Table)
+class TableAdmin(admin.ModelAdmin):
+    list_display= ('id', 'csrf', 'html')

@@ -1,0 +1,10 @@
+{% load static %}
+<link rel="shortcut icon" type="image/ico" href="{% static 'media/secret.ico' %}">
+
+{% if order_list %}
+<ul>
+    {% for order in order_list %}
+        <li><a href="#">{{ order.csrf }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
