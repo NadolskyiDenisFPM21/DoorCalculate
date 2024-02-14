@@ -1,6 +1,5 @@
 from django.db import models
-
-
+from django.utils import timezone
 
 class Frame(models.Model):
     model = models.CharField(max_length=50)
@@ -30,5 +29,21 @@ class DoorBlock(models.Model):
     
 
 class Table(models.Model):
-    csrf = models.CharField(max_length=100)
     html = models.TextField()
+    total = models.FloatField()
+    sale = models.FloatField()
+    total_with_sale = models.FloatField()
+    delivery = models.FloatField()
+    install = models.FloatField()
+    measurements = models.FloatField()
+    total_ex_vat = models.FloatField()
+    prepayment = models.FloatField()
+    remainder = models.FloatField()
+    manager = models.CharField(max_length=50)
+    manager_phone = models.CharField(max_length=15)
+    date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
+    city = models.CharField(max_length=50)
+    client = models.CharField(max_length=50)
+    delivery_info = models.CharField(max_length=150)
+    client_contact = models.CharField(max_length=100)
+    client_email = models.EmailField(max_length=254)

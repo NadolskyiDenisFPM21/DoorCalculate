@@ -1,55 +1,85 @@
 {% load static %}
 
 <style>
-	@page {
-		size: A4 landscape;
-	}
 	@font-face {
 		font-family: Roboto;
 		src: url('polls/static/Roboto-Light.ttf');
 	}
+
+	@page {
+		size: A4 landscape;
+		margin: 1cm;
+	}
+
 	* {
 		font-family: 'Roboto', sans-serif;
-	}
-	body {
-		margin: 20px;
-	}
-	.content {
 		font-size: 6px;
-
 	}
 
-	table {
+	h3 {
+		font-size: 14px;
+	}
+
+	/* table {
 
 		table-layout: fixed;
 		border-collapse: collapse;
-	}
-
-	table thead tr th {
+	} */
+	/* 
+	th {
 		border: 2px solid #121212;
-	}
+	} */
 
-	.cell {
-		height: 25px;
+	td,
+	th {
+		/* height: 20px; */
 		text-align: center;
-		overflow: hidden;
-		text-overflow: clip;
+
 	}
 
-	table tbody tr td {
+	tr {
 		border: 1px solid #121212;
 	}
 
 
 	.vertical {
 		writing-mode: vertical-lr;
-		transform: rotate(180deg);
+		/* transform: rotate(180deg);
 		white-space: nowrap;
-		width: 25px;
+		width: 25px; */
+	}
+
+	.info {
+		width: 100px;
+		display: inline-block;
 	}
 </style>
 
 
+<h3>Бланк заказа №
+	{{ table.id }}</h3>
+<div>Менеджер:
+	{{table.manager}}</div>
+<div>{{table.manager_phone}}</div>
+
 {% if html %}
-	{{html|safe}}
-{% endif %}
+{{html|safe}}
+{% endif %}</br></br></br>
+<div class="info-content">
+	<div class='info'>
+		<span>Всего за дверные блоки: {{table.total}} грн</span></br>
+		<span>Скидка:{{sale}}грн</span></br>
+		<span>Всего, с учетом скидки: {{table.total_with_sale}} грн</span></br>
+		<span>Доставка на склад(объект) без выгрузки и заноса на этаж: {{table.delivery}} грн</span></br>
+		<span>Монтаж:{{table.install}}грн</span></br><span>Замеры: {{table.measurements}} грн</span></br>
+		<span>Итоги, без НДС: {{table.total_ex_vat}} грн</span></br>
+		<span>Предоплата: {{table.prepayment}} грн</span> </br>
+		<span>Остаток: {{table.remainder}} грн</span></br>
+	</div>
+	<div class="info">
+		<span>Город: {{table.city}}</span></br><span>Заказчик: {{table.client}}</span></br>
+		<span>Доставка заказа: {{table.delivery_info}}</span></br>
+		<span>Контакти: {{table.client_contact}}</span></br>
+		<span>Эл.Адреса: {{table.client_email}}</span>
+	</div>
+</div>

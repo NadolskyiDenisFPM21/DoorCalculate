@@ -6,8 +6,8 @@ import io
 from html2excel import ExcelParser
 
 
-def create(data):
-    input_file = 'polls/document_gen/to_excel.html'
+def create(path):
+    input_file = path
     parser = ExcelParser(input_file)
     parser.to_excel('polls/document_gen/to_excel.xlsx')
     wb = openpyxl.load_workbook('polls/document_gen/to_excel.xlsx')

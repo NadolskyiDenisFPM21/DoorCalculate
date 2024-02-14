@@ -17,6 +17,7 @@ function full_price() {
     $('#total-ex-vat-value').text(fullPrice.toFixed(2));
     fullPrice -= parseFloat($('#prepayment-value').val());
     $('#remainder-value').text(fullPrice.toFixed(2));
+    setCookie();
 }
 
 
@@ -74,7 +75,7 @@ $(document).ready(function () {
 
         }
         attachChangeEvent();
-        setCookie();
+
         full_price();
     });
 

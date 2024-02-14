@@ -10,7 +10,9 @@
 
 <div id="form-pdf">
     <h3>Бланк заказа №: {% if order_id %}{{ order_id }}{% endif %}</h3>
-
+    <div>Менеджер: <input type="text" value="{{table.manager}}" id="manager" class="info-value"></div>
+    <div>Номер менеджера: <input type="text" value="{{table.manager_phone}}" id="manager-phone" class="info-value"></div>
+    <div>{{date}}</div>
 
     <form method="post" action="{% url 'new_order' %}">
         {% csrf_token %}
@@ -27,13 +29,13 @@
                         <th class='cell' rowspan="3">Модель</th>
                         <th class='cell td-opening' colspan="2" rowspan="3">Открывание</th>
                         <th class='cell vertical' rowspan="3">Сторона</th>
-                        <th class='cell' colspan="2" rowspan="2">Габариты полотна</th>
-                        <th class='cell' colspan="2" rowspan="2">Габариты короба</th>
-                        <th class='cell' colspan="2" rowspan="2">Габариты проема</th>
-                        <th class='cell' rowspan="3">Отделки полотна и комплектации</th>
+                        <th class='cell' colspan="2" rowspan="2">Полотно</th>
+                        <th class='cell' colspan="2" rowspan="2">Короб</th>
+                        <th class='cell' colspan="2" rowspan="2">Проем</th>
+                        <th class='cell' rowspan="3">Отделки полотна</th>
                         <th class='cell' rowspan="3">Тип короба</th>
-                        <th class='cell' rowspan="3">Алюминиевый обвяз полотна</th>
-                        <th class='cell' rowspan="3">Цвет покраски профиля и короба</th>
+                        <th class='cell' rowspan="3">Алюм обвяз</th>
+                        <th class='cell' rowspan="3">Цвет покраски профиля</th>
                         <th class='cell' rowspan="3">Цвет уплотнителя</th>
                         <th class='cell vertical' rowspan="3">Сторона</th>
                         <th class='cell' colspan="4" rowspan="1">Врезка</th>
@@ -77,7 +79,7 @@
                 </div>
                 <div class="info_price inline-div">
                     <span>Скидка: </span>
-                    <input placeholder="0-100" type="number" id="discount-value" class="info-value" name="" min="0" max="100" value="0">
+                    <input placeholder="0-100" type="number" id="discount-value" class="info-value" name="" min="0" max="100" value="{{table.sale}}">
                     <span>%</span>
                 </div>
                 <div class="info_price">
@@ -87,19 +89,19 @@
                 </div>
                 <div class="info_price inline-div">
                     <span>Доставка на склад(объект) без выгрузки и заноса на этаж: </span>
-                    <input placeholder="0-100" type="number" id="delivery-value" class="info-value" name="" min="0" value="0">
+                    <input placeholder="0-100" type="number" id="delivery-value" class="info-value" name="" min="0" value="{{table.delivery}}">
                     <span>грн</span>
                 </div>
                 </br>
                 <div class="info_price inline-div">
                     <span>Монтаж: </span>
-                    <input placeholder="0-100" type="number" id="instal-value" class="info-value" name="" min="0" value="0">
+                    <input placeholder="0-100" type="number" id="instal-value" class="info-value" name="" min="0" value="{{table.install}}">
                     <span>грн</span>
                 </div>
                 </br>
                 <div class="info_price inline-div">
                     <span>Замеры: </span>
-                    <input placeholder="0-100" type="number" id="zamery-value" class="info-value" name="" min="0" value="0">
+                    <input placeholder="0-100" type="number" id="zamery-value" class="info-value" name="" min="0" value="{{table.measurements}}">
                     <span>грн</span>
                 </div>
                 <div class="info_price">
@@ -109,7 +111,7 @@
                 </div>
                 <div class="info_price inline-div">
                     <span>Предоплата: </span>
-                    <input placeholder="0-100" type="number" id="prepayment-value" class="info-value" name="" min="0" value="0">
+                    <input placeholder="0-100" type="number" id="prepayment-value" class="info-value" name="" min="0" value="{{table.prepayment}}">
                     <span>грн</span>
                 </div>
                 <div class="info_price">
@@ -120,6 +122,11 @@
             </div>
         </div>
     </div>
+    <div>Город: <input id="city" value="{{table.city}}" class="info-value"></div>
+    <div>Заказчик: <input id="client" value="{{table.client}}" class="info-value"></div>
+    <div>Контакты: <input id="client-contact" value="{{table.client_contact}}" class="info-value"></div>
+    <div>Доставка заказа: <input id="delivery-info" value="{{table.delivery_info}}" class="info-value"></div>
+    <div>Эл.Адрес: <input id="client-email" value="{{table.client_email}}" class="info-value"></div>
 </div>
 
 
@@ -130,13 +137,13 @@
             <th class='cell' rowspan="3">Модель</th>
             <th class='cell td-opening' colspan="2" rowspan="3">Открывание</th>
             <th class='cell vertical' rowspan="3">Сторона</th>
-            <th class='cell' colspan="2" rowspan="2">Габариты полотна</th>
-            <th class='cell' colspan="2" rowspan="2">Габариты короба</th>
-            <th class='cell' colspan="2" rowspan="2">Габариты проема</th>
-            <th class='cell' rowspan="3">Отделки полотна и комплектации</th>
+            <th class='cell' colspan="2" rowspan="2">Полотно</th>
+            <th class='cell' colspan="2" rowspan="2">Короб</th>
+            <th class='cell' colspan="2" rowspan="2">Проем</th>
+            <th class='cell' rowspan="3">Отделки полотна</th>
             <th class='cell' rowspan="3">Тип короба</th>
-            <th class='cell' rowspan="3">Алюминиевый обвяз полотна</th>
-            <th class='cell' rowspan="3">Цвет покраски профиля и короба</th>
+            <th class='cell' rowspan="3">Алюм обвяз</th>
+            <th class='cell' rowspan="3">Цвет покраски профиля</th>
             <th class='cell' rowspan="3">Цвет уплотнителя</th>
             <th class='cell vertical' rowspan="3">Сторона</th>
             <th class='cell' colspan="4" rowspan="1">Врезка</th>
@@ -309,8 +316,9 @@
     <button type="submit">Download Excel</button>
 </form>
 
-    <button type="button" id="gen-pdf">Download PDF</button>
-
+<form method="get" action={% url 'create_pdf_specification' %}>
+    <button type="submit" id="gen-pdf">Download PDF</button>
+</form>
 
 
 
