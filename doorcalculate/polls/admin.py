@@ -4,7 +4,7 @@ from .models import DoorBlock, Frame, Table
 
 @admin.register(DoorBlock)
 class DoorBlockAdmin(admin.ModelAdmin):
-    list_display = ('id', 'article', 'model', 'width', 'height', 'opening_type', 'price')
+    list_display = ('id', 'model', 'width', 'height', 'price')
     
 @admin.register(Frame)
 class FrameAdmin(admin.ModelAdmin):

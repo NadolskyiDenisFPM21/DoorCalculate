@@ -16,73 +16,122 @@ function isStringInOptions(selectId, searchString) {
 
 export function attachChangeEvent() {
     //change model
-    $('#select-model').change(function () {
-        $('#price').text('');
-        var selectedModel = $(this).val();
-        $.ajax({
-            url: '/get_filtered_data/',
-            data: { 'selected_model': selectedModel },
-            dataType: "json",
-            success: function (data) {
-                $('#select-width').empty();
-                $('#select-width').append($('<option value="" disabled selected>Ширина мм</option>'));
-                $('#select-height').empty();
-                $('#select-height').append($('<option value="" disabled selected>Высота мм</option>'));
-                $('#select-frame').empty();
-                $('#select-frame').append($('<option value="" disabled selected>Тип короба</option>'));
-                $.each(data, function (index, item) {
-                    if (!isStringInOptions('#select-width', item.width)) {
-                        $('#select-width').append('<option value="' + item.width + '">' + item.width + '</option>');
-                    }
-                    if (!isStringInOptions('#select-height', item.height)) {
-                        $('#select-height').append('<option value="' + item.height + '">' + item.height + '</option>');
-                    }
-                    if (!isStringInOptions('#select-frame', item.frame)) {
-                        $('#select-frame').append('<option value="' + item.frame + '">' + item.frame + '</option>');
-                    }
-                });
-            }
-        });
-    });
+    // $('#select-model').change(function () {
+    //     $('#price').text('');
+    //     var selectedModel = $(this).val();
+    //     $.ajax({
+    //         url: '/get_filtered_data/',
+    //         data: { 'selected_model': selectedModel },
+    //         dataType: "json",
+    //         success: function (data) {
+    //             $('#select-width').empty();
+    //             $('#select-width').append($('<option value="" disabled selected>Ширина мм</option>'));
+    //             $('#select-height').empty();
+    //             $('#select-height').append($('<option value="" disabled selected>Высота мм</option>'));
+    //             $('#select-frame').empty();
+    //             $('#select-frame').append($('<option value="" disabled selected>Тип короба</option>'));
+    //             $.each(data, function (index, item) {
+    //                 if (!isStringInOptions('#select-width', item.width)) {
+    //                     $('#select-width').append('<option value="' + item.width + '">' + item.width + '</option>');
+    //                 }
+    //                 if (!isStringInOptions('#select-height', item.height)) {
+    //                     $('#select-height').append('<option value="' + item.height + '">' + item.height + '</option>');
+    //                 }
+    //                 if (!isStringInOptions('#select-frame', item.frame)) {
+    //                     $('#select-frame').append('<option value="' + item.frame + '">' + item.frame + '</option>');
+    //                 }
+    //             });
+    //         }
+    //     });
+    // });
+
+
+    // $('#select-opening-2').change(function (e) {
+    //     var selectedModel = $('#select-model').val();
+    //     var selectedWidth = $('#select-width').var();
+    //     var selectedOpening2 = $(this).val();
+
+
+    //     $.ajax({
+    //         url: "/get_filtered_data/",
+    //         data: {
+    //             'selected_model': selectedModel,
+    //             'selected_width': selectedWidth,
+    //             'selected_opening2': selectedOpening2
+    //         },
+    //         dataType: "json",
+    //         success: function (data) {
+    //             $('#select-frame').empty();
+    //             $('#select-frame').append($('<option value="" disabled selected>Тип короба</option>'));
+    //             $.each(data, function (index, item) {
+    //                 if (!isStringInOptions('#select-frame', item.frame)) {
+    //                     $('#select-frame').append('<option value="' + item.frame + '">' + item.frame + '</option>');
+    //                 }
+    //             });
+    //         }
+    //     });
+    // });
 
 
     //change width
-    $('#select-width').change(function (e) {
+    $('.get_filtered_data').change(function (e) {
         var selectedModel = $('#select-model').val();
-        var selectedWidth = $(this).val();
+        var selectedFrame = $('#select-frame').val();
+        var selectedWidth = $('#select-width').val();
         $.ajax({
             url: '/get_filtered_data/',
             data: {
                 'selected_model': selectedModel,
+                'selected_frame': selectedFrame,
                 'selected_width': selectedWidth,
             },
             dataType: "json",
             success: function (data) {
-                $('#select-height').empty();
-                $('#select-height').append($('<option value="" disabled selected>Высота мм</option>'));
-                $('#select-frame').empty();
-                $('#select-frame').append($('<option value="" disabled selected>Тип короба</option>'));
-                $.each(data, function (index, item) {
-                    if (!isStringInOptions('#select-height', item.height)) {
-                        $('#select-height').append('<option value="' + item.height + '">' + item.height + '</option>');
-                    }
-                    if (!isStringInOptions('#select-frame', item.frame)) {
-                        $('#select-frame').append('<option value="' + item.frame + '">' + item.frame + '</option>');
-                    }
-                });
+                var keys = Object.keys(data[0]);
+                if ('height' == keys[0]) {
+                    $('#select-height').empty();
+                    $('#select-height').append($('<option value="" disabled selected>Высота мм</option>'));
+                    $.each(data, function (index, item) {
+                        if (!isStringInOptions('#select-height', item.height)) {
+                            $('#select-height').append('<option value="' + item.height + '">' + item.height + '</option>');
+                        }
+                    });
+                    return;
+                }
+
+                if ('width' == keys[0]) {
+                    $('#select-width').empty();
+                    $('#select-width').append($('<option value="" disabled selected>Ширина мм</option>'));
+                    $('#select-opening-2').empty();
+                    $('#select-opening-2').append($('<option value="" disabled selected>Открывание</option>'));
+                    $.each(data, function (index, item) {
+                        if (!isStringInOptions('#select-width', item.height)) {
+                            $('#select-width').append('<option value="' + item.width + '">' + item.width + '</option>');
+                        }
+                        $.each(item.opening_type2, function (j, jvalue) {
+                            if (!isStringInOptions('#select-opening-2', jvalue)) {
+                                $('#select-opening-2').append('<option value="' + jvalue + '">' + jvalue + '</option>');
+                            }
+                        });
+                    });
+                    return;
+                }
+
+                if ('frame' == keys[0]) {
+                    $('#select-frame').empty();
+                    $('#select-frame').append($('<option value="" disabled selected>Тип короба</option>'));
+                    $.each(data, function (index, item) {
+                        if (!isStringInOptions('#select-frame', item.frame)) {
+                            $('#select-frame').append('<option value="' + item.frame + '">' + item.frame + '</option>');
+                        }
+                    });
+                    return;
+                }
+
             }
         });
     });
 
-
-    $('#loop').change(function (e) {
-        var inputValue = $('#loop').val();
-        var maxValue = 2;  // Задайте ваше максимальное значение
-
-        if (inputValue > maxValue) {
-            $('#loop').val(maxValue);
-        }
-    });
 }
 
 

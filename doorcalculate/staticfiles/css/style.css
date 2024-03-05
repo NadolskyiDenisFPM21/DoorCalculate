@@ -36,8 +36,8 @@ table tbody tr td {
 }
 
 
-select,
-input {
+td select,
+td input {
     width: 100%;
     height: 100%;
     border: none;

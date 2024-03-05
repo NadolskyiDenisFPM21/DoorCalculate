@@ -7,12 +7,13 @@
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-
-<div id="form-pdf">
+<div class="container">
+<div class="form-pdf" id="form-pdf">
     <h3>Бланк заказа №: {% if order_id %}{{ order_id }}{% endif %}</h3>
-    <div>Менеджер: <input type="text" value="{{table.manager}}" id="manager" class="info-value"></div>
-    <div>Номер менеджера: <input type="text" value="{{table.manager_phone}}" id="manager-phone" class="info-value"></div>
-    <div>{{date}}</div>
+    <div class="manager">
+        <div>Менеджер: <input type="text" value="{{table.manager}}" id="manager" class="info-value"> Номер менеджера: <input type="text" value="{{table.manager_phone}}" id="manager-phone" class="info-value"></div>
+    </div>
+    <div><b>{{date}}</b></div>
 
     <form method="post" action="{% url 'new_order' %}">
         {% csrf_token %}
@@ -27,24 +28,24 @@
                 <thead>
                     <tr>
                         <th class='cell' rowspan="3">Модель</th>
+                        <th class='cell' rowspan="3">Тип короба</th>
                         <th class='cell td-opening' colspan="2" rowspan="3">Открывание</th>
                         <th class='cell vertical' rowspan="3">Сторона</th>
                         <th class='cell' colspan="2" rowspan="2">Полотно</th>
                         <th class='cell' colspan="2" rowspan="2">Короб</th>
                         <th class='cell' colspan="2" rowspan="2">Проем</th>
                         <th class='cell' rowspan="3">Отделки полотна</th>
-                        <th class='cell' rowspan="3">Тип короба</th>
                         <th class='cell' rowspan="3">Алюм обвяз</th>
                         <th class='cell' rowspan="3">Цвет покраски профиля</th>
                         <th class='cell' rowspan="3">Цвет уплотнителя</th>
                         <th class='cell vertical' rowspan="3">Сторона</th>
-                        <th class='cell' colspan="4" rowspan="1">Врезка</th>
-                        <th class='cell vertical' rowspan="3">Количество</th>
+                        <th class='cell' colspan="3" rowspan="1">Врезка</th>
+                        <th class='cell vertical' rowspan="3">колво</th>
                         <th class='cell' rowspan="2">Цена</th>
                         <th class='cell' rowspan="2">Всего</th>
                     </tr>
                     <tr>
-                        <th class='cell' colspan="3">Отверствия</th>
+                        <th class='cell' colspan="2">Отверствия</th>
                         <th class='cell' rowspan="2">Петли</th>
                     </tr>
                     <tr>
@@ -55,8 +56,8 @@
                         <th class='cell'>Ширина мм</th>
                         <th class='cell'>Высота мм</th>
                         <th class='cell'>ручка</th>
-                        <th class='cell'>WC</th>
-                        <th class='cell'>PZ</th>
+                        <th class='cell'>WC/PZ</th>
+                        {% comment %} <th class='cell'>PZ</th> {% endcomment %}
                         <th class='cell'>грн</th>
                         <th class='cell'>грн</th>
                     </tr>
@@ -75,58 +76,68 @@
                 <div class="info_price">
                     <span>Всего за дверные блоки: </span>
                     <span id="full-price-value" class="info-value"></span>
-                    <span>грн</span>
+                    
                 </div>
                 <div class="info_price inline-div">
-                    <span>Скидка: </span>
+                    <span>Скидка %: </span>
                     <input placeholder="0-100" type="number" id="discount-value" class="info-value" name="" min="0" max="100" value="{{table.sale}}">
-                    <span>%</span>
                 </div>
                 <div class="info_price">
                     <span>Всего, с учётом скидки: </span>
                     <span id="full-price-discount-value" class="info-value"></span>
-                    <span>грн</span>
+                    
                 </div>
                 <div class="info_price inline-div">
                     <span>Доставка на склад(объект) без выгрузки и заноса на этаж: </span>
                     <input placeholder="0-100" type="number" id="delivery-value" class="info-value" name="" min="0" value="{{table.delivery}}">
-                    <span>грн</span>
+                    
                 </div>
                 </br>
                 <div class="info_price inline-div">
                     <span>Монтаж: </span>
                     <input placeholder="0-100" type="number" id="instal-value" class="info-value" name="" min="0" value="{{table.install}}">
-                    <span>грн</span>
+                    
                 </div>
                 </br>
                 <div class="info_price inline-div">
                     <span>Замеры: </span>
                     <input placeholder="0-100" type="number" id="zamery-value" class="info-value" name="" min="0" value="{{table.measurements}}">
-                    <span>грн</span>
+                    
                 </div>
                 <div class="info_price">
                     <span>Итого, без НДС: </span>
                     <span id="total-ex-vat-value" class="info-value"></span>
-                    <span>грн</span>
+                    
                 </div>
                 <div class="info_price inline-div">
                     <span>Предоплата: </span>
                     <input placeholder="0-100" type="number" id="prepayment-value" class="info-value" name="" min="0" value="{{table.prepayment}}">
-                    <span>грн</span>
+                    
                 </div>
                 <div class="info_price">
                     <span>Итого, без НДС: </span>
                     <span id="remainder-value" class="info-value"></span>
-                    <span>грн</span>
+                    
                 </div>
+            </div>
+            <div>
+                <div>Город: <input id="city" value="{{table.city}}" class="info-value"></div>
+                <div>Заказчик: <input id="client" value="{{table.client}}" class="info-value"></div>
+                <div>Контакты: <input id="client-contact" value="{{table.client_contact}}" class="info-value"></div>
+                <div>Доставка заказа: <input id="delivery-info" value="{{table.delivery_info}}" class="info-value"></div>
+                <div>Эл.Адрес: <input id="client-email" value="{{table.client_email}}" class="info-value"></div>
+            </div>
+            <div>
+                <span>Высота ручки : 1000 мм. от низа полотна.</br>
+                    Зазор от пола до полотна : 8 мм.</br>
+                    Цвет фурнитуры : <b>мат.хром</b></br>
+                    Без стоимости ручек.</br>
+                    <span><b>Срок изготовления: 8-10 недель</b> с момента согласования и внесения предоплаты.</span>
+                </span>
             </div>
         </div>
     </div>
-    <div>Город: <input id="city" value="{{table.city}}" class="info-value"></div>
-    <div>Заказчик: <input id="client" value="{{table.client}}" class="info-value"></div>
-    <div>Контакты: <input id="client-contact" value="{{table.client_contact}}" class="info-value"></div>
-    <div>Доставка заказа: <input id="delivery-info" value="{{table.delivery_info}}" class="info-value"></div>
-    <div>Эл.Адрес: <input id="client-email" value="{{table.client_email}}" class="info-value"></div>
+    
 </div>
 
 
@@ -135,24 +146,24 @@
     <thead>
         <tr>
             <th class='cell' rowspan="3">Модель</th>
+            <th class='cell' rowspan="3">Тип короба</th>
             <th class='cell td-opening' colspan="2" rowspan="3">Открывание</th>
             <th class='cell vertical' rowspan="3">Сторона</th>
             <th class='cell' colspan="2" rowspan="2">Полотно</th>
             <th class='cell' colspan="2" rowspan="2">Короб</th>
             <th class='cell' colspan="2" rowspan="2">Проем</th>
             <th class='cell' rowspan="3">Отделки полотна</th>
-            <th class='cell' rowspan="3">Тип короба</th>
             <th class='cell' rowspan="3">Алюм обвяз</th>
             <th class='cell' rowspan="3">Цвет покраски профиля</th>
             <th class='cell' rowspan="3">Цвет уплотнителя</th>
             <th class='cell vertical' rowspan="3">Сторона</th>
-            <th class='cell' colspan="4" rowspan="1">Врезка</th>
-            <th class='cell vertical' rowspan="3">Количество</th>
+            <th class='cell' colspan="3" rowspan="1">Врезка</th>
+            <th class='cell vertical' rowspan="3">колво</th>
             <th class='cell' rowspan="2">Цена</th>
             <th class='cell' rowspan="2">Всего</th>
         </tr>
         <tr>
-            <th class='cell' colspan="3">Отверствия</th>
+            <th class='cell' colspan="2">Отверствия</th>
             <th class='cell' rowspan="2">Петли</th>
         </tr>
         <tr>
@@ -163,8 +174,8 @@
             <th class='cell'>Ширина мм</th>
             <th class='cell'>Высота мм</th>
             <th class='cell'>ручка</th>
-            <th class='cell'>WC</th>
-            <th class='cell'>PZ</th>
+            <th class='cell'>WC/PZ</th>
+            {% comment %} <th class='cell'>PZ</th> {% endcomment %}
             <th class='cell'>грн</th>
             <th class='cell'>грн</th>
         </tr>
@@ -172,13 +183,18 @@
     <tbody>
         <tr>
             <td class='cell' rowspan="2">
-                <select name="model" id="select-model" class='model'>
+                <select name="model" id="select-model" class='model get_filtered_data'>
                     <option value="" disabled selected>Модель</option>
                     {% for door in door_block_list %}
                     {% ifchanged door.model %}
                     <option value="{{ door.model }}">{{ door.model }}</option>
                     {% endifchanged %}
                     {% endfor %}
+                </select>
+            </td>
+            <td class='cell' rowspan="2">
+                <select name="frame" id="select-frame" class='frame get-data get_filtered_data'>
+                    <option value="" disabled selected>Тип короба</option>
                 </select>
             </td>
             <td class='cell td-opening' rowspan="2">
@@ -199,7 +215,7 @@
                 <span>лицо</span>
             </td>
             <td class='cell'>
-                <select name="width" id="select-width" class='width get-data'>
+                <select name="width" id="select-width" class='width get-data get_filtered_data'>
                     <option value="" disabled selected>Ширина мм</option>
                 </select>
             </td>
@@ -224,11 +240,6 @@
                 <span id="is-primed"></span>
             </td>
             <td class='cell' rowspan="2">
-                <select name="frame" id="select-frame" class='frame get-data'>
-                    <option value="" disabled selected>Тип короба</option>
-                </select>
-            </td>
-            <td class='cell' rowspan="2">
                 <span id="al-band-canvas"></span>
             </td>
             <td class='cell' rowspan="2">
@@ -248,18 +259,19 @@
             </td>
             <td class='cell'>
                 <select name="pen" id="is-wc-face" class='is-pen'>
-                    <option value="+" selected>+</option>
+                    <option value="WC" selected>WC</option>
+                    <option value="PZ">PZ</option>
                     <option value="-">-</option>
                 </select>
             </td>
-            <td class='cell'>
+            {% comment %} <td class='cell'>
                 <select name="pen" id="is-pz-face" class='is-pen'>
                     <option value="+" selected>+</option>
                     <option value="-">-</option>
                 </select>
-            </td>
+            </td> {% endcomment %}
             <td class='cell' rowspan="2">
-                <input placeholder="кол-во" type="number" name="" id="loop" min="1" max="2">
+                <span id="loop">2</span>
             </td>
             <td class='cell count' rowspan="2">
                 <input placeholder="кол-во" type="number" name="" id="count" min="1"
@@ -293,21 +305,22 @@
             </td>
             <td class='cell'>
                 <select name="pen" id="is-wc-back" class='is-pen'>
-                    <option value="+" selected>+</option>
-                    <option value="-">-</option>
+                    <option value="WC" selected>WC</option>
+                    <option value="PZ">PZ</option>
+                    <option value="PZ">-</option>
                 </select>
             </td>
-            <td class='cell'>
+            {% comment %} <td class='cell'>
                 <select name="pen" id="is-pz-back" class='is-pen'>
                     <option value="+" selected>+</option>
                     <option value="-">-</option>
                 </select>
-            </td>
+            </td> {% endcomment %}
         </tr>
     </tbody>
 </table>
 {% endif %}
-
+</div>
 <button type="button" id="add">Добавить дверь</button>
 </br>
 </br>
@@ -319,9 +332,6 @@
 <form method="get" action={% url 'create_pdf_specification' %}>
     <button type="submit" id="gen-pdf">Download PDF</button>
 </form>
-
-
-
 
 
 

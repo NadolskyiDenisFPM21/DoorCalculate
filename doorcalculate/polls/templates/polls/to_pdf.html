@@ -34,7 +34,11 @@
 	th {
 		/* height: 20px; */
 		text-align: center;
+		padding: 0.3em;
+	}
 
+	th{
+		padding: 0;
 	}
 
 	tr {
@@ -49,10 +53,15 @@
 		width: 25px; */
 	}
 
-	.info {
-		width: 100px;
-		display: inline-block;
-	}
+	.info-content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Два столбца с равной шириной */
+        gap: 20px; /* Отступ между блоками */
+    }
+
+    .info {
+        /* Можно добавить дополнительные стили для блока info */
+    }
 </style>
 
 
@@ -65,7 +74,19 @@
 {% if html %}
 {{html|safe}}
 {% endif %}</br></br></br>
-<div class="info-content">
+
+<style>
+	div{
+		width: 100%;
+		text-align: left;
+	}
+	div span{
+		font-size: 12px;
+	}
+</style>
+	<table id="info-content">
+		<tr>
+			<td>
 	<div class='info'>
 		<span>Всего за дверные блоки: {{table.total}} грн</span></br>
 		<span>Скидка:{{sale}}грн</span></br>
@@ -76,10 +97,24 @@
 		<span>Предоплата: {{table.prepayment}} грн</span> </br>
 		<span>Остаток: {{table.remainder}} грн</span></br>
 	</div>
+</td>
+<td>
 	<div class="info">
 		<span>Город: {{table.city}}</span></br><span>Заказчик: {{table.client}}</span></br>
 		<span>Доставка заказа: {{table.delivery_info}}</span></br>
 		<span>Контакти: {{table.client_contact}}</span></br>
 		<span>Эл.Адреса: {{table.client_email}}</span>
 	</div>
-</div>
+</td>
+<td>
+	<div>
+		<span>Высота ручки : 1000 мм. от низа полотна.</br>
+			Зазор от пола до полотна : 8 мм.</br>
+			Цвет фурнитуры : мат.хром</br>
+			Без стоимости ручек.</br>
+			<span>Срок изготовления: 8-10 недель с момента согласования и внесения предоплаты.</span>
+		</span>
+	</div>
+</td>
+</tr>
+</table>

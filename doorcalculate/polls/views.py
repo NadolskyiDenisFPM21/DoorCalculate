@@ -72,18 +72,25 @@ def new_order(request):
 
 def get_filtered_data(request):
     selected_model = request.GET.get('selected_model')
+    selected_frame = request.GET.get('selected_frame')
+    if selected_frame != '':
+        selected_frame = Frame.objects.get(model=selected_frame)
     selected_width = request.GET.get('selected_width')
-    if selected_width is not None:
-        filtered_data = list(DoorBlock.objects.filter(model=selected_model, width=selected_width).values('height'))
-        frame_id_list = [id['frame'] for id in list(DoorBlock.objects.filter(model=selected_model, width=selected_width).values('frame'))]
+    if selected_width != '':
+        filtered_data = list(DoorBlock.objects.filter(model=selected_model, width=selected_width, frame=selected_frame).values('height'))
+    elif selected_frame != '':
+        filtered_data = list(DoorBlock.objects.filter(model=selected_model, frame=selected_frame).values('width'))
+        for i in range(len(filtered_data)):
+            filtered_data[i]['opening_type2'] = selected_frame.opening_type2.split(';')
     else:
         frame_id_list = [id['frame'] for id in list(DoorBlock.objects.filter(model=selected_model).values('frame'))]
         frames = [list(Frame.objects.filter(id=id).values('model'))[0]['model'] for id in frame_id_list]
-        filtered_data = list(DoorBlock.objects.filter(model=selected_model).values('width', 'height'))
-    
-    frames = [list(Frame.objects.filter(id=id).values('model'))[0]['model'] for id in frame_id_list]
-    for i in range(len(frames)):
-        filtered_data[i]['frame'] = frames[i]
+        filtered_data = []
+        
+        for i in range(len(frames)):
+            filtered_data.append({'frame': frames[i]})
+
+
     
     return JsonResponse(filtered_data, safe=False)
 
