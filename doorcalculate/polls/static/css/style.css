@@ -54,7 +54,9 @@ select {
 /* Обновленные стили для блока info */
 .info {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    flex-direction: row-reverse;
 }
 
 .info>div {
@@ -67,11 +69,19 @@ select {
     /* Уменьшен размер текста в блоке info */
 }
 
-/* Уменьшение размера изображений */
-.opening-photo img {
-    width: 50%;
-    /* Уменьшено в 2 раза */
+.client-info {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    align-items: flex-end;
+    flex-wrap: nowrap;
 }
+
+
+.inp-15 {
+    width: 15vw;
+}
+
 
 /* Уменьшение текста и inputs в 1.5 раза в блоке info */
 .form-pdf input,
@@ -103,4 +113,8 @@ select {
     /* Вертикальное написание слева направо */
     text-orientation: upright;
     width: 6em;
+}
+
+.opening-img {
+    width: 25%;
 }

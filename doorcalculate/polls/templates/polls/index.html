@@ -68,10 +68,6 @@
         {% endif %}
 
         <div class="info">
-            <div class="opening-photo">
-                <img src="{% static "media/Internal opening.png" %}" class="opening-img">
-                <img src="{% static "media/External opening.png" %}" class="opening-img">
-            </div>
             <div class="price">
                 <div class="info_price">
                     <span>Всего за дверные блоки: </span>
@@ -120,12 +116,12 @@
                     
                 </div>
             </div>
-            <div>
-                <div>Город: <input id="city" value="{{table.city}}" class="info-value"></div>
-                <div>Заказчик: <input id="client" value="{{table.client}}" class="info-value"></div>
-                <div>Контакты: <input id="client-contact" value="{{table.client_contact}}" class="info-value"></div>
-                <div>Доставка заказа: <input id="delivery-info" value="{{table.delivery_info}}" class="info-value"></div>
-                <div>Эл.Адрес: <input id="client-email" value="{{table.client_email}}" class="info-value"></div>
+            <div class="client-info">
+                <div>Город: <input id="city" value="{{table.city}}" class="info-value inp-15"></div>
+                <div>Заказчик: <input id="client" value="{{table.client}}" class="info-value inp-15"></div>
+                <div>Контакты: <input id="client-contact" value="{{table.client_contact}}" class="info-value inp-15"></div>
+                <div>Доставка заказа: <input id="delivery-info" value="{{table.delivery_info}}" class="info-value inp-15"></div>
+                <div>Эл.Адрес: <input type='email' id="client-email" value="{{table.client_email}}" class="info-value inp-15"></div>
             </div>
             <div>
                 <span>Высота ручки : 1000 мм. от низа полотна.</br>
@@ -175,7 +171,6 @@
             <th class='cell'>Высота мм</th>
             <th class='cell'>ручка</th>
             <th class='cell'>WC/PZ</th>
-            {% comment %} <th class='cell'>PZ</th> {% endcomment %}
             <th class='cell'>грн</th>
             <th class='cell'>грн</th>
         </tr>
@@ -264,12 +259,6 @@
                     <option value="-">-</option>
                 </select>
             </td>
-            {% comment %} <td class='cell'>
-                <select name="pen" id="is-pz-face" class='is-pen'>
-                    <option value="+" selected>+</option>
-                    <option value="-">-</option>
-                </select>
-            </td> {% endcomment %}
             <td class='cell' rowspan="2">
                 <span id="loop">2</span>
             </td>
@@ -333,7 +322,10 @@
     <button type="submit" id="gen-pdf">Download PDF</button>
 </form>
 
-
+<div class="opening-photo">
+    <img hidden src="{% static "media/External opening.jpg" %}" class="opening-img external">
+    <img hidden src="{% static "media/Internal opening.jpg" %}" class="opening-img internal">
+</div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="{% static 'js/index.js' %}" type="module"></script>

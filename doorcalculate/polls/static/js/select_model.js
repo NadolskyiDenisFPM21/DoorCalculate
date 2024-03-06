@@ -15,63 +15,15 @@ function isStringInOptions(selectId, searchString) {
 
 
 export function attachChangeEvent() {
-    //change model
-    // $('#select-model').change(function () {
-    //     $('#price').text('');
-    //     var selectedModel = $(this).val();
-    //     $.ajax({
-    //         url: '/get_filtered_data/',
-    //         data: { 'selected_model': selectedModel },
-    //         dataType: "json",
-    //         success: function (data) {
-    //             $('#select-width').empty();
-    //             $('#select-width').append($('<option value="" disabled selected>Ширина мм</option>'));
-    //             $('#select-height').empty();
-    //             $('#select-height').append($('<option value="" disabled selected>Высота мм</option>'));
-    //             $('#select-frame').empty();
-    //             $('#select-frame').append($('<option value="" disabled selected>Тип короба</option>'));
-    //             $.each(data, function (index, item) {
-    //                 if (!isStringInOptions('#select-width', item.width)) {
-    //                     $('#select-width').append('<option value="' + item.width + '">' + item.width + '</option>');
-    //                 }
-    //                 if (!isStringInOptions('#select-height', item.height)) {
-    //                     $('#select-height').append('<option value="' + item.height + '">' + item.height + '</option>');
-    //                 }
-    //                 if (!isStringInOptions('#select-frame', item.frame)) {
-    //                     $('#select-frame').append('<option value="' + item.frame + '">' + item.frame + '</option>');
-    //                 }
-    //             });
-    //         }
-    //     });
-    // });
-
-
-    // $('#select-opening-2').change(function (e) {
-    //     var selectedModel = $('#select-model').val();
-    //     var selectedWidth = $('#select-width').var();
-    //     var selectedOpening2 = $(this).val();
-
-
-    //     $.ajax({
-    //         url: "/get_filtered_data/",
-    //         data: {
-    //             'selected_model': selectedModel,
-    //             'selected_width': selectedWidth,
-    //             'selected_opening2': selectedOpening2
-    //         },
-    //         dataType: "json",
-    //         success: function (data) {
-    //             $('#select-frame').empty();
-    //             $('#select-frame').append($('<option value="" disabled selected>Тип короба</option>'));
-    //             $.each(data, function (index, item) {
-    //                 if (!isStringInOptions('#select-frame', item.frame)) {
-    //                     $('#select-frame').append('<option value="' + item.frame + '">' + item.frame + '</option>');
-    //                 }
-    //             });
-    //         }
-    //     });
-    // });
-
+    $('#select-opening-2').change(function (e) {
+        if ($('select-opening-2').val() == "Наружное") {
+            $('.external').attr("hidden", true);
+            $('.internal').attr("hidden", false);
+        } else {
+            $('.internal').attr("hidden", true);
+            $('.external').attr("hidden", false);
+        }
+    });
 
     //change width
     $('.get_filtered_data').change(function (e) {
@@ -105,7 +57,7 @@ export function attachChangeEvent() {
                     $('#select-opening-2').empty();
                     $('#select-opening-2').append($('<option value="" disabled selected>Открывание</option>'));
                     $.each(data, function (index, item) {
-                        if (!isStringInOptions('#select-width', item.height)) {
+                        if (!isStringInOptions('#select-width', item.width)) {
                             $('#select-width').append('<option value="' + item.width + '">' + item.width + '</option>');
                         }
                         $.each(item.opening_type2, function (j, jvalue) {
