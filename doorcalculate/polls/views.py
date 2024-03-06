@@ -27,7 +27,7 @@ from xhtml2pdf.files import pisaFileObject
 
 
 def index(request):
-    door_block_list = DoorBlock.objects.all()
+    door_block_list = DoorBlock.objects.all().order_by('model')
     template = loader.get_template('polls/index.html')
     id: int
     try:
