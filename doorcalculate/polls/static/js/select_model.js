@@ -15,18 +15,14 @@ function isStringInOptions(selectId, searchString) {
 
 
 export function attachChangeEvent() {
-    $('#select-opening-2').change(function (e) {
-        if ($('select-opening-2').val() == "Наружное") {
-            $('.external').attr("hidden", true);
-            $('.internal').attr("hidden", false);
-        } else {
-            $('.internal').attr("hidden", true);
-            $('.external').attr("hidden", false);
-        }
-    });
-
     //change width
     $('.get_filtered_data').change(function (e) {
+        if ($(this).attr('id') == 'select-model') {
+            $('#select-frame').empty();
+            $('#select-frame').append($('<option value="" disabled selected>Тип короба</option>'));
+            $('#select-width').empty();
+            $('#select-width').append($('<option value="" disabled selected>Ширина мм</option>'));
+        }
         var selectedModel = $('#select-model').val();
         var selectedFrame = $('#select-frame').val();
         var selectedWidth = $('#select-width').val();

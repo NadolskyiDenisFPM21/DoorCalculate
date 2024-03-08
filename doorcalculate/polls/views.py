@@ -21,6 +21,8 @@ from xhtml2pdf import pisa, default
 from xhtml2pdf.default import DEFAULT_CSS
 from xhtml2pdf.files import pisaFileObject
 
+import os
+
 
 
 
@@ -148,8 +150,8 @@ def get_back_width(request):
     return JsonResponse(data=data, safe=False)
 
 def format_table(html):
-    html = html.replace('<th class="cell remove" rowspan="3">Удалить</th>', '')
-    html = html.replace('<td rowspan="2"><button type="button" class="remove-button">Удалить дверь</button></td>', '')
+    html = html.replace('<th class="cell remove" rowspan="3">Del</th>', '')
+    html = html.replace('<td rowspan="2" class="remove-button">⮾</td>', '')
     return html
 
 
@@ -173,6 +175,27 @@ def create_excel_specification(request):
     return response
 
 
+def link_callback(uri, rel):
+    # use short variable names
+    sUrl = settings.STATIC_URL      # Typically /static/
+    sRoot = settings.STATICFILES_DIRS[0]    # Typically /home/userX/project_static/
+    mUrl = settings.MEDIA_URL       # Typically /static/media/
+    mRoot = settings.MEDIA_ROOT     # Typically /home/userX/project_static/media/
+    # convert URIs to absolute system paths
+    if uri.startswith(mUrl):
+        path = os.path.join(mRoot, uri.replace(mUrl, ""))
+    elif uri.startswith(sUrl):
+        path = os.path.join(sRoot, uri.replace(sUrl, ""))
+    else:
+        path = uri
+        
+    pisaFileObject.getNamedFile = lambda self: path
+
+    # make sure that file exists
+    if not os.path.isfile(path):
+        raise Exception('media URI must start with %s or %s but %s' % (sUrl, mUrl, path))
+    return path
+
 
 def create_pdf_specification(request):
     id = request.COOKIES['id']
@@ -180,17 +203,16 @@ def create_pdf_specification(request):
     html = format_table(table.html)
     context_temp = {
         'html': html,
-        'table': table
+        'table': table,
+        'prepayment_value': table.prepayment*table.total_ex_vat/100
     }
     template = loader.get_template('polls/to_pdf.html')
     html = template.render(context_temp)
-
-    # default.DEFAULT_CSS = DEFAULT_CSS.replace("background-color: transparent;", "", 1)
-    # patch temporary file resolution when loading fonts
-    pisaFileObject.getNamedFile = lambda self: self.uri
+    # return HttpResponse(template.render(context_temp, request))
+    # pisaFileObject.getNamedFile = lambda self: self.uri
 
     with BytesIO() as result:
-        pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), result, encoding="utf-8")
+        pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), result, encoding="utf-8", link_callback=link_callback)
         if pdf.err:
             return HttpResponse("Invalid PDF", status_code=400, content_type='text/plain')
         response = HttpResponse(result.getvalue(), content_type='application/pdf; charset=utf-8')

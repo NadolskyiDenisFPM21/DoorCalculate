@@ -6,16 +6,21 @@ import { attachChangeEvent } from './select_model.js'
 function full_price() {
     var fullPrice = 0.0;
     var discountVal = parseFloat($('#discount-value').val());
+    var count = 0;
     $("#table tbody tr .total-price").each(function (index, element) {
         var price = $(element).find('span');
         fullPrice += parseFloat(price.text());
     });
+    $('#table tbody tr .count').each(function (index, element) {
+        count += parseInt($(element).find('span').text());
+    });
     $('#full-price-value').text(fullPrice.toFixed(2));
     fullPrice = parseFloat((fullPrice * (1 - discountVal / 100)).toFixed(2));
     $('#full-price-discount-value').text(fullPrice.toFixed(2));
-    fullPrice += parseFloat($('#delivery-value').val()) + parseFloat($('#instal-value').val()) + parseFloat($('#zamery-value').val());
+    fullPrice += parseFloat($('#delivery-value').val()) + parseFloat($('#instal-value').val() * count) + parseFloat($('#zamery-value').val());
     $('#total-ex-vat-value').text(fullPrice.toFixed(2));
-    fullPrice -= parseFloat($('#prepayment-value').val());
+    $('#prepayment-percent').text(fullPrice * parseFloat($('#prepayment-value').val()) / 100);
+    fullPrice -= fullPrice * parseFloat($('#prepayment-value').val()) / 100;
     $('#remainder-value').text(fullPrice.toFixed(2));
     setCookie();
 }
@@ -56,13 +61,13 @@ $(document).ready(function () {
                     $(this).replaceWith('<span>' + $(this).val() + '</span>');
                 });
             });
-            $(html_data[0]).append('<td rowspan="2"><button type="button" class="remove-button">Удалить дверь</button></td>');
+            $(html_data[0]).append('<td rowspan="2" class="remove-button">⮾</td>');
             var remove_buttons = $('.remove-button');
             console.log(remove_buttons.length);
             $(remove_buttons[remove_buttons.length - 1]).click(removeDoor);
             var rem = $($("#table thead").children()[0]).find('.remove');
             if (rem.length == 0) {
-                $($("#table thead").children()[0]).append('<th class="cell remove" rowspan="3">Удалить</th>');
+                $($("#table thead").children()[0]).append('<th class="cell remove" rowspan="3">Del</th>');
             }
             base.children().each(function () {
                 $(this).find('input').each(function () {

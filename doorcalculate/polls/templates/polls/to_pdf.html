@@ -3,32 +3,22 @@
 <style>
 	@font-face {
 		font-family: Roboto;
-		src: url('polls/static/Roboto-Light.ttf');
+		src: url('/static/Roboto-Light.ttf');
 	}
 
 	@page {
 		size: A4 landscape;
-		margin: 1cm;
+		margin: .5cm;
 	}
 
 	* {
 		font-family: 'Roboto', sans-serif;
-		font-size: 6px;
+		font-size: 8px;
 	}
 
 	h3 {
 		font-size: 14px;
 	}
-
-	/* table {
-
-		table-layout: fixed;
-		border-collapse: collapse;
-	} */
-	/* 
-	th {
-		border: 2px solid #121212;
-	} */
 
 	td,
 	th {
@@ -45,27 +35,13 @@
 		border: 1px solid #121212;
 	}
 
-
-	.vertical {
-		writing-mode: vertical-lr;
-		/* transform: rotate(180deg);
-		white-space: nowrap;
-		width: 25px; */
+	img{
+		width: 10cm;
 	}
-
-	.info-content {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Два столбца с равной шириной */
-        gap: 20px; /* Отступ между блоками */
-    }
-
-    .info {
-        /* Можно добавить дополнительные стили для блока info */
-    }
 </style>
 
 
-<h3>Бланк заказа №
+<h3>Бланк замовлення №
 	{{ table.id }}</h3>
 <div>Менеджер:
 	{{table.manager}}</div>
@@ -79,6 +55,7 @@
 	div{
 		width: 100%;
 		text-align: left;
+		padding: 10px;
 	}
 	div span{
 		font-size: 12px;
@@ -88,33 +65,36 @@
 		<tr>
 			<td>
 	<div class='info'>
-		<span>Всего за дверные блоки: {{table.total}} грн</span></br>
-		<span>Скидка:{{sale}}грн</span></br>
-		<span>Всего, с учетом скидки: {{table.total_with_sale}} грн</span></br>
-		<span>Доставка на склад(объект) без выгрузки и заноса на этаж: {{table.delivery}} грн</span></br>
-		<span>Монтаж:{{table.install}}грн</span></br><span>Замеры: {{table.measurements}} грн</span></br>
-		<span>Итоги, без НДС: {{table.total_ex_vat}} грн</span></br>
-		<span>Предоплата: {{table.prepayment}} грн</span> </br>
-		<span>Остаток: {{table.remainder}} грн</span></br>
+		<span>Усього за дверні блоки: {{table.total}} грн</span></br>
+		<span>Знижка:{{sale}}грн</span></br>
+		<span>Усього, з урахуванням знижки: {{table.total_with_sale}} грн</span></br>
+		<span>Доставка на склад (об'єкт) без вивантаження та занесення на поверх: {{table.delivery}} грн</span></br>
+		<span>Монтаж:{{table.install}}грн</span></br><span>Заміри: {{table.measurements}} грн</span></br>
+		<span>Підсумки без ПДВ: {{table.total_ex_vat}} грн</span></br>
+		<span>Передплата: {{table.prepayment}} %</span> </br>
+		<span>Передплата: {{prepayment_value}} грн</span> </br>
+		<span>Залишок: {{table.remainder}} грн</span></br>
 	</div>
 </td>
 <td>
 	<div class="info">
-		<span>Город: {{table.city}}</span></br><span>Заказчик: {{table.client}}</span></br>
-		<span>Доставка заказа: {{table.delivery_info}}</span></br>
+		<span>Місто: {{table.city}}</span></br><span>Замовник: {{table.client}}</span></br>
+		<span>Доставка замовлення: {{table.delivery_info}}</span></br>
 		<span>Контакти: {{table.client_contact}}</span></br>
-		<span>Эл.Адреса: {{table.client_email}}</span>
+		<span>Ел.Адреса: {{table.client_email}}</span>
 	</div>
 </td>
 <td>
 	<div>
-		<span>Высота ручки : 1000 мм. от низа полотна.</br>
-			Зазор от пола до полотна : 8 мм.</br>
-			Цвет фурнитуры : мат.хром</br>
-			Без стоимости ручек.</br>
-			<span>Срок изготовления: 8-10 недель с момента согласования и внесения предоплаты.</span>
+		<span>Висота ручки: 1000 мм. від низу полотна.</br>
+			Зазор від підлоги до полотна: 8 мм.</br>
+			Колір фурнітури: мат.хром</br>
+			Без вартості ручок.</br>
+			<span>Термін виготовлення: 8-10 тижнів з моменту погодження та внесення передоплати.</span>
 		</span>
 	</div>
 </td>
 </tr>
 </table>
+
+<img src="/static/External opening.jpg" class="opening-img external">
