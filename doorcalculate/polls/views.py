@@ -169,12 +169,12 @@ def create_excel_specification(request):
     }
     template = loader.get_template('polls/to_excel.html')
     html = template.render(context_temp)
-    with open('/home/DenisNadolskyi/DoorCalculate/doorcalculate/' + 'polls/to_excel.html', 'w', encoding='utf-8') as file:
+    with open(str(settings.BASE_DIR) + '\\polls\\to_excel.html', 'w', encoding='utf-8') as file:
         file.write(html)
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = f'attachment; filename=specification-{id}-{datetime.now().strftime("%y-%m-%d %H-%M-%S")}.xlsx'
 
-    file = excel.create('polls/to_excel.html')
+    file = excel.create('\\polls\\to_excel.html')
     response.write(file)
 
     return response
