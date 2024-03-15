@@ -107,13 +107,13 @@ select {
     flex: 1;
 }
 
-.vertical {
-    font-size: .5em;
-    writing-mode: vertical-lr;
+/*.vertical {*/
+/*    font-size: .5em;*/
+/*    writing-mode: vertical-lr;*/
     /* Вертикальное написание слева направо */
-    text-orientation: upright;
-    width: 6em;
-}
+/*    text-orientation: upright;*/
+/*    width: 6em;*/
+/*}*/
 
 .opening-img {
     width: 25%;
@@ -126,4 +126,8 @@ select {
 .remove-button {
     cursor: pointer;
     font-size: 2em;
+}
+
+textarea{
+    resize: none;
 }

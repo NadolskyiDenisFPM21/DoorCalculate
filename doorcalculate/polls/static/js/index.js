@@ -7,6 +7,7 @@ function full_price() {
     var fullPrice = 0.0;
     var discountVal = parseFloat($('#discount-value').val());
     var count = 0;
+    var poslugy = 0.0;
     $("#table tbody tr .total-price").each(function (index, element) {
         var price = $(element).find('span');
         fullPrice += parseFloat(price.text());
@@ -17,20 +18,24 @@ function full_price() {
     $('#full-price-value').text(fullPrice.toFixed(2));
     fullPrice = parseFloat((fullPrice * (1 - discountVal / 100)).toFixed(2));
     $('#full-price-discount-value').text(fullPrice.toFixed(2));
-    fullPrice += parseFloat($('#delivery-value').val()) + parseFloat($('#instal-value').val() * count) + parseFloat($('#zamery-value').val());
+    poslugy = parseFloat($('#delivery-value').val()) + parseFloat($('#instal-value').val() * count) + parseFloat($('#zamery-value').val());
+    $('#poslugy').text(poslugy);
+    fullPrice += poslugy;
     $('#total-ex-vat-value').text(fullPrice.toFixed(2));
     $('#prepayment-percent').text(fullPrice * parseFloat($('#prepayment-value').val()) / 100);
     fullPrice -= fullPrice * parseFloat($('#prepayment-value').val()) / 100;
     $('#remainder-value').text(fullPrice.toFixed(2));
+
     setCookie();
 }
 
 
 function removeDoor() {
-    var tr = $(this).parent().parent();
+    var tr = $(this).parent();
     tr.next().remove();
     tr.remove();
     setCookie();
+    full_price();
 }
 
 
@@ -63,7 +68,6 @@ $(document).ready(function () {
             });
             $(html_data[0]).append('<td rowspan="2" class="remove-button">⮾</td>');
             var remove_buttons = $('.remove-button');
-            console.log(remove_buttons.length);
             $(remove_buttons[remove_buttons.length - 1]).click(removeDoor);
             var rem = $($("#table thead").children()[0]).find('.remove');
             if (rem.length == 0) {

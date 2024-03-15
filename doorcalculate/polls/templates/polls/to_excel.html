@@ -1,0 +1,53 @@
+<h3>Бланк замовлення №
+	{{ table.order_number }}</h3>
+<div>Менеджер:
+	{{table.manager}}</div>
+<div>{{table.manager_phone}}</div>
+
+{% if html %}
+{{html|safe}}
+{% endif %}</br></br></br>
+
+	<table id="info-content">
+		<tr>
+			<td colspan="7" rowspan="10">
+	<div class='info'>
+		<span>Всього за дверні блоки: {{table.total}} грн</span></br>
+		<span>Знижка:{{table.sale}}%</span></br>
+		<span>Усього, з урахуванням знижки: {{table.total_with_sale}} грн</span></br>
+		<span>Доставка на склад (об'єкт) без вивантаження та занесення на поверх: {{table.delivery}} грн</span></br>
+		<span>Монтаж:{{table.install}}грн</span></br><span>Заміри: {{table.measurements}} грн</span></br>
+		<span>Всього за послуги: {{table.poslugy}} грн</span></br>
+		<span>Всього сума замовлення: {{table.total_ex_vat}} грн</span></br>
+		<span>Передплата: {{table.prepayment}} %</span> </br>
+		<span>Передплата: {{prepayment_value}} грн</span> </br>
+		<span>Залишок: {{table.remainder}} грн</span></br>
+	</div>
+</td>
+
+<td colspan="7" rowspan="10">
+	<div class="info">
+		<span>Місто: {{table.city}}</span></br><span>Замовник: {{table.client}}</span></br>
+		<span>Доставка замовлення: {{table.delivery_info}}</span></br>
+		<span>Контакти: {{table.client_contact}}</span></br>
+		<span>Ел.Адреса: {{table.client_email}}</span>
+	</div>
+</td>
+
+<td colspan="7" rowspan="10">
+	<div>
+		<span>Висота ручки: 1000 мм. від низу полотна.</br>
+			Зазор від підлоги до полотна: 8 мм.</br>
+			Без вартості ручок.</br>
+			<span>Термін виготовлення: 1-4 тижнів з моменту погодження та внесення передоплати.</span>
+			</br>
+			<span>Примітка: </br>{{table.note}}</span>
+		</span>
+	</div>
+</td>
+</tr>
+
+
+</table>
+
+

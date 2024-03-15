@@ -31,12 +31,14 @@ function getKilobyteSize(str) {
 
 export function setCookie() {
     var tableHtml = document.getElementById('table').outerHTML;
+    var order_number = $('#order-number').val();
     var total = parseFloat($('#full-price-value').text());
     var sale = parseFloat($('#discount-value').val());
     var total_with_sale = parseFloat($('#full-price-discount-value').text());
     var delivery = parseFloat($('#delivery-value').val());
     var install = parseFloat($('#instal-value').val());
     var measurements = parseFloat($('#zamery-value').val());
+    var poslugy = parseFloat($('#poslugy').text());
     var total_ex_vat = parseFloat($('#total-ex-vat-value').text());
     var prepayment = parseFloat($('#prepayment-value').val());
     var remainder = parseFloat($('#remainder-value').text());
@@ -48,10 +50,12 @@ export function setCookie() {
     var delivery_info = $('#delivery-info').val();
     var client_email = $('#client-email').val();
     var date = $('#date').text();
+    var note = $('#note').val();
 
 
     var formData = {
         'html': tableHtml,
+        'order_number': order_number,
         'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
         'csrftoken': getCookie('csrftoken'),
         'total': total,
@@ -60,6 +64,7 @@ export function setCookie() {
         'delivery': delivery,
         'install': install,
         'measurements': measurements,
+        'poslugy': poslugy,
         'total_ex_vat': total_ex_vat,
         'prepayment': prepayment,
         'remainder': remainder,
@@ -71,6 +76,7 @@ export function setCookie() {
         'delivery_info': delivery_info,
         'client_email': client_email,
         'date': date,
+        'note': note
     };
 
     $.ajax({

@@ -7,12 +7,12 @@ from html2excel import ExcelParser
 
 
 def create(path):
-    input_file = path
+    input_file = '/home/DenisNadolskyi/DoorCalculate/doorcalculate/' + path
     parser = ExcelParser(input_file)
-    parser.to_excel('polls/document_gen/to_excel.xlsx')
-    wb = openpyxl.load_workbook('polls/document_gen/to_excel.xlsx')
+    parser.to_excel('/home/DenisNadolskyi/DoorCalculate/doorcalculate/polls/document_gen/to_excel.xlsx')
+    wb = openpyxl.load_workbook('/home/DenisNadolskyi/DoorCalculate/doorcalculate/polls/document_gen/to_excel.xlsx')
     sheet = wb.active
-    
+
     for row in sheet.iter_rows(min_row=1, max_row=sheet.max_row, min_col=1, max_col=sheet.max_column):
         for cell in row:
             cell.border = Border(
@@ -54,6 +54,5 @@ def create(path):
 #     with io.BytesIO() as buffer:
 #         workbook.save(buffer)
 #         return buffer.getvalue()
-        
-        
-    
+
+

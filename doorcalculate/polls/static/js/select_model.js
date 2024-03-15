@@ -19,7 +19,7 @@ export function attachChangeEvent() {
     $('.get_filtered_data').change(function (e) {
         if ($(this).attr('id') == 'select-model') {
             $('#select-frame').empty();
-            $('#select-frame').append($('<option value="" disabled selected>Тип короба</option>'));
+            $('#select-frame').append($('<option value="" disabled selected>Тип коробу</option>'));
             $('#select-width').empty();
             $('#select-width').append($('<option value="" disabled selected>Ширина мм</option>'));
         }
@@ -51,7 +51,7 @@ export function attachChangeEvent() {
                     $('#select-width').empty();
                     $('#select-width').append($('<option value="" disabled selected>Ширина мм</option>'));
                     $('#select-opening-2').empty();
-                    $('#select-opening-2').append($('<option value="" disabled selected>Открывание</option>'));
+                    $('#select-opening-2').append($('<option value="" disabled selected>Відкривання</option>'));
                     $.each(data, function (index, item) {
                         if (!isStringInOptions('#select-width', item.width)) {
                             $('#select-width').append('<option value="' + item.width + '">' + item.width + '</option>');
@@ -67,7 +67,7 @@ export function attachChangeEvent() {
 
                 if ('frame' == keys[0]) {
                     $('#select-frame').empty();
-                    $('#select-frame').append($('<option value="" disabled selected>Тип короба</option>'));
+                    $('#select-frame').append($('<option value="" disabled selected>Тип коробу</option>'));
                     $.each(data, function (index, item) {
                         if (!isStringInOptions('#select-frame', item.frame)) {
                             $('#select-frame').append('<option value="' + item.frame + '">' + item.frame + '</option>');

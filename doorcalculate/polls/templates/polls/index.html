@@ -1,7 +1,7 @@
 {% load static %}
-<link rel="shortcut icon" type="image/ico" href="{% static 'media/secret.ico' %}">
+<link rel="shortcut icon" type="image/ico" href="{% static 'media/icon.ico' %}">
 <head>
-    <title>Secret Specification</title>
+    <title>CP Specification</title>
 </head>
 
 
@@ -9,7 +9,7 @@
 
 <div class="container">
 <div class="form-pdf" id="form-pdf">
-    <h3>Бланк замовлення №: {% if order_id %}{{ order_id }}{% endif %}</h3>
+    <h3>Бланк замовлення №: <input type="text" value="{{table.order_number}}" class="info-value" id="order-number"></h3>
     <div class="manager">
         <div>Менеджер: <input type="text" value="{{table.manager}}" id="manager" class="info-value"> Номер менеджера: <input type="text" value="{{table.manager_phone}}" id="manager-phone" class="info-value"></div>
     </div>
@@ -19,13 +19,6 @@
         {% csrf_token %}
         <button type="submit" id="new">Нове замовлення</button>
     </form>
-
-    <div>
-        <input type="radio" id="diller-price" name="price-type">
-        <label for="diller-price">Диллерські ціни</label>
-        <input type="radio" id="rrc-price" name="price-type">
-        <label for="rrc-price">РРЦ</label>
-    </div>
 
     <div class="content">
         {% if html %}
@@ -46,6 +39,7 @@
                         <th class='cell' rowspan="3">Колір фарбування</br> профілю</th>
                         <th class='cell' rowspan="3">Колір ущільнювача</th>
                         <th class='cell' colspan="3" rowspan="1">Врізання</th>
+                        <th class='cell' rowspan="3">Колір фурн</th>
                         <th class='cell vertical' rowspan="3">к-сть</th>
                         <th class='cell' rowspan="2">Ціна</th>
                         <th class='cell' rowspan="2">Усього</th>
@@ -55,15 +49,14 @@
                         <th class='cell' rowspan="2">Петлі</th>
                     </tr>
                     <tr>
-                        <th class='cell' rowspan="1">Ширина мм </br>обличчя\тил</th>
-                        <th class='cell'>Висота мм </br>обличчя\тил</th>
+                        <th class='cell' rowspan="1">Ширина мм </br>лице\тил</th>
+                        <th class='cell'>Висота мм </br>лице\тил</th>
                         <th class='cell'>Ширина мм</th>
                         <th class='cell'>Висота мм</th>
                         <th class='cell'>Ширина мм</th>
                         <th class='cell'>Висота мм</th>
                         <th class='cell'>Ручка</th>
                         <th class='cell'>WC/PZ</th>
-                        {% comment %} <th class='cell'>PZ</th> {% endcomment %}
                         <th class='cell'>грн</th>
                         <th class='cell'>грн</th>
                     </tr>
@@ -76,52 +69,56 @@
         <div class="info">
             <div class="price">
                 <div class="info_price">
-                    <span>Усього за дверні блоки: </span>
+                    <span>Усього за дверні блоки грн: </span>
                     <span id="full-price-value" class="info-value"></span>
-                    
+
                 </div>
                 <div class="info_price inline-div">
                     <span>Знижка %: </span>
                     <input placeholder="0-100" type="number" id="discount-value" class="info-value" name="" min="0" max="100" value="{{table.sale}}">
                 </div>
                 <div class="info_price">
-                    <span>Усього, з урахуванням знижки: </span>
+                    <span>Всього, з урахуванням знижки грн: </span>
                     <span id="full-price-discount-value" class="info-value"></span>
-                    
+
                 </div>
                 <div class="info_price inline-div">
-                    <span>Доставка на склад(об'єкт) без вивантаження та занесення на поверх: </span>
+                    <span>Доставка на склад(об'єкт) без вивантаження та занесення на поверх грн: </span>
                     <input placeholder="0-100" type="number" id="delivery-value" class="info-value" name="" min="0" value="{{table.delivery}}">
-                    
+
                 </div>
                 <div class="info_price inline-div">
-                    <span>Монтаж: </span>
+                    <span>Монтаж за 1 блок грн: </span>
                     <input placeholder="0-100" type="number" id="instal-value" class="info-value" name="" min="0" value="{{table.install}}">
-                    
+
                 </div>
                 <div class="info_price inline-div">
-                    <span>Заміри: </span>
+                    <span>Заміри грн: </span>
                     <input placeholder="0-100" type="number" id="zamery-value" class="info-value" name="" min="0" value="{{table.measurements}}">
-                    
+
+                </div>
+                <div class="info_price inline-div">
+                    <span>Всього за послуги грн:</span>
+                    <span id="poslugy"></span>
                 </div>
                 <div class="info_price">
-                    <span>Разом, без ПДВ: </span>
+                    <span>Всього сума замовлення грн: </span>
                     <span id="total-ex-vat-value" class="info-value"></span>
-                    
+
                 </div>
                 <div class="info_price inline-div">
                     <span>Передплата %: </span>
                     <input placeholder="0-100" type="number" id="prepayment-value" class="info-value" name="" min="0" value="{{table.prepayment}}">
-                    
+
                 </div>
                 <div class="info_price inline-div">
                     <span>Передплата грн: </span>
-                    <span id="prepayment-percent"></span>                    
+                    <span id="prepayment-percent"></span>
                 </div>
                 <div class="info_price">
-                    <span>Залишок: </span>
+                    <span>Залишок грн: </span>
                     <span id="remainder-value" class="info-value"></span>
-                    
+
                 </div>
             </div>
             <div class="client-info">
@@ -134,14 +131,16 @@
             <div>
                 <span>Висота ручки: 1000 мм. від низу полотна.</br>
                     Зазор від підлоги до полотна: 8 мм.</br>
-                    Колір фурнітури: <b>мат.хром</b></br>
                     Без вартості ручок.</br>
-                    <span><b>Термін виготовлення: 8-10 тижнів</b> з моменту погодження та внесення передоплати.</span>
+                    <span><b>Термін виготовлення: 1-4 тижнів</b> з моменту погодження та внесення передоплати.</span>
                 </span>
+                </br>
+                <label for="note">Примітка:</label></br>
+                <textarea resize="none" name="note" id="note" rows="8" cols="70" class="info-value" value="{{table.note}}"></textarea>
             </div>
         </div>
     </div>
-    
+
 </div>
 
 
@@ -161,6 +160,7 @@
             <th class='cell' rowspan="3">Колір фарбування</br> профілю</th>
             <th class='cell' rowspan="3">Колір ущільнювача</th>
             <th class='cell' colspan="3" rowspan="1">Врізання</th>
+            <th class='cell' rowspan="3">Колір фурн</th>
             <th class='cell vertical' rowspan="3">к-сть</th>
             <th class='cell' rowspan="2">Ціна</th>
             <th class='cell' rowspan="2">Усього</th>
@@ -170,8 +170,8 @@
             <th class='cell' rowspan="2">Петлі</th>
         </tr>
         <tr>
-            <th class='cell' rowspan="1">Ширина мм </br>обличчя\тил</th>
-            <th class='cell'>Висота мм </br>обличчя\тил</th>
+            <th class='cell' rowspan="1">Ширина мм </br>лице\тил</th>
+            <th class='cell'>Висота мм </br>лице\тил</th>
             <th class='cell'>Ширина мм</th>
             <th class='cell'>Висота мм</th>
             <th class='cell'>Ширина мм</th>
@@ -202,12 +202,12 @@
             <td class='cell td-opening'>
                 <select name="opening" id="select-opening" class='opening'>
                     <option value="" disabled selected>Відкривання</option>
-                    <option value="Левое">Левое</option>
-                    <option value="Правое">Правое</option>
+                    <option value="Левое">Ліве</option>
+                    <option value="Правое">Праве</option>
                 </select>
             </td>
             <td class='cell'>
-                <span>обличча</span>
+                <span>лицьова</span>
             </td>
             <td class='cell'>
                 <select name="width" id="select-width" class='width get-data get_filtered_data'>
@@ -258,6 +258,9 @@
             </td>
             <td class='cell' rowspan="2">
                 <span id="loop">2</span>
+            </td>
+            <td class="cell" rowspan="2">
+                <span id="furn-color"></span>
             </td>
             <td class='cell count' rowspan="2">
                 <input placeholder="кол-во" type="number" name="" id="count" min="1"

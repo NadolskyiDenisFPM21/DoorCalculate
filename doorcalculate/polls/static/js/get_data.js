@@ -29,6 +29,14 @@ $(document).change(function () {
                     var is_primed = $('#is-primed');
                     is_primed.empty();
                     is_primed.append(data[0].is_primed);
+                    var furn_color = $('#furn-color');
+                    furn_color.empty();
+                    if(data[0].seal_color=="Чорний"){
+                        furn_color.append("Чорний");
+                    }else{
+                        furn_color.append("Мат.хром");
+                    }
+
                 }
             });
 
@@ -61,13 +69,7 @@ $(document).change(function () {
                 success: function (dimensions) {
                     $('#back-width').empty().text(dimensions.back_width);
                     $('#back-height').empty().text(dimensions.back_height);
-                    // $.ajax({
-                    //     url: "/set_table_cookies/",
-                    //     data: { 'door_table': js_table },
-                    //     dataType: "json",
-                    //     success: function (response) {
-                    //     }
-                    // });
+
                 }
             });
 
