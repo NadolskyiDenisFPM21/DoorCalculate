@@ -107,16 +107,15 @@ select {
     flex: 1;
 }
 
-/*.vertical {*/
-/*    font-size: .5em;*/
-/*    writing-mode: vertical-lr;*/
-    /* Вертикальное написание слева направо */
-/*    text-orientation: upright;*/
-/*    width: 6em;*/
-/*}*/
 
 .opening-img {
     width: 25%;
+}
+
+
+.opening-img2{
+    width: 70%;
+    transform: translate(4em, -7em);
 }
 
 #select-model {
